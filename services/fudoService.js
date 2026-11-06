@@ -378,7 +378,7 @@ class FudoService {
       sales: todayRes.hourlyCounts[h] || 0
     }));
 
-    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, and rent
+    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, rent, and Luz CGE
     const last3MonthsData = [
       {
         year: 2026,
@@ -388,11 +388,13 @@ class FudoService {
         invoicesReceived: 24747769,
         salaries: 15591778,
         rent: 4711018,
+        electricity: 2000000,
         invoicesRate: Number(((24747769 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
         salariesRate: Number(((15591778 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
         rentRate: Number(((4711018 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        totalExpenses: 24747769 + 15591778 + 4711018,
-        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 15591778 + 4711018)
+        electricityRate: Number(((2000000 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
+        totalExpenses: 24747769 + 15591778 + 4711018 + 2000000,
+        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 15591778 + 4711018 + 2000000)
       },
       {
         year: 2026,
@@ -402,11 +404,13 @@ class FudoService {
         invoicesReceived: 25022624,
         salaries: 14289532,
         rent: 4699360,
+        electricity: 2000000,
         invoicesRate: Number(((25022624 / 61355284) * 100).toFixed(1)),
         salariesRate: Number(((14289532 / 61355284) * 100).toFixed(1)),
         rentRate: Number(((4699360 / 61355284) * 100).toFixed(1)),
-        totalExpenses: 25022624 + 14289532 + 4699360,
-        operatingBalance: 61355284 - (25022624 + 14289532 + 4699360)
+        electricityRate: Number(((2000000 / 61355284) * 100).toFixed(1)),
+        totalExpenses: 25022624 + 14289532 + 4699360 + 2000000,
+        operatingBalance: 61355284 - (25022624 + 14289532 + 4699360 + 2000000)
       },
       {
         year: 2026,
@@ -416,11 +420,13 @@ class FudoService {
         invoicesReceived: 29457385,
         salaries: 15413920,
         rent: 4697060,
+        electricity: 2000000,
         invoicesRate: Number(((29457385 / 72734562) * 100).toFixed(1)),
         salariesRate: Number(((15413920 / 72734562) * 100).toFixed(1)),
         rentRate: Number(((4697060 / 72734562) * 100).toFixed(1)),
-        totalExpenses: 29457385 + 15413920 + 4697060,
-        operatingBalance: 72734562 - (29457385 + 15413920 + 4697060)
+        electricityRate: Number(((2000000 / 72734562) * 100).toFixed(1)),
+        totalExpenses: 29457385 + 15413920 + 4697060 + 2000000,
+        operatingBalance: 72734562 - (29457385 + 15413920 + 4697060 + 2000000)
       }
     ];
 
@@ -430,6 +436,7 @@ class FudoService {
       totalInvoices: last3MonthsData.reduce((acc, m) => acc + m.invoicesReceived, 0),
       totalSalaries: last3MonthsData.reduce((acc, m) => acc + m.salaries, 0),
       totalRent: last3MonthsData.reduce((acc, m) => acc + m.rent, 0),
+      totalElectricity: last3MonthsData.reduce((acc, m) => acc + m.electricity, 0),
       totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
       totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
       months: last3MonthsData

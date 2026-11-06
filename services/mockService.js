@@ -196,11 +196,13 @@ class MockService {
         invoicesReceived: 24747769,
         salaries: 15591778,
         rent: 4711018,
+        electricity: 2000000,
         invoicesRate: 38.7,
         salariesRate: 24.4,
         rentRate: 7.4,
-        totalExpenses: 45050565,
-        operatingBalance: 18910701
+        electricityRate: 3.1,
+        totalExpenses: 47050565,
+        operatingBalance: 16910701
       },
       {
         year: 2026,
@@ -210,11 +212,13 @@ class MockService {
         invoicesReceived: 25022624,
         salaries: 14289532,
         rent: 4699360,
+        electricity: 2000000,
         invoicesRate: 40.8,
         salariesRate: 23.3,
         rentRate: 7.7,
-        totalExpenses: 44011516,
-        operatingBalance: 17343768
+        electricityRate: 3.3,
+        totalExpenses: 46011516,
+        operatingBalance: 15343768
       },
       {
         year: 2026,
@@ -224,11 +228,13 @@ class MockService {
         invoicesReceived: 29457385,
         salaries: 15413920,
         rent: 4697060,
+        electricity: 2000000,
         invoicesRate: 40.5,
         salariesRate: 21.2,
         rentRate: 6.5,
-        totalExpenses: 49568365,
-        operatingBalance: 23166197
+        electricityRate: 2.7,
+        totalExpenses: 51568365,
+        operatingBalance: 21166197
       }
     ];
 
@@ -238,8 +244,9 @@ class MockService {
       totalInvoices: 79227778,
       totalSalaries: 45295230,
       totalRent: 14107438,
-      totalExpenses: 138630446,
-      totalOperatingBalance: 59420666,
+      totalElectricity: 6000000,
+      totalExpenses: 144630446,
+      totalOperatingBalance: 53420666,
       months: last3MonthsData
     };
 
