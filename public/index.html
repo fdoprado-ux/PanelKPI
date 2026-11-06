@@ -46,66 +46,6 @@
 </head>
 <body class="bg-[#0b0f17] text-gray-100 antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- TOP HEADER -->
-  <header class="sticky top-0 z-40 bg-[#0b0f17]/90 backdrop-blur-md border-b border-white/10 px-4 lg:px-8 py-3.5 transition-all">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      
-      <!-- Brand & Title -->
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl amber-gradient flex items-center justify-center shadow-lg shadow-brand-500/20 text-white">
-          <i data-lucide="flame" class="w-6 h-6 stroke-[2.5]"></i>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              STEAKOUT <span class="text-xs px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 font-semibold border border-brand-500/30">CHOPHOUSE</span>
-            </h1>
-          </div>
-          <p class="text-xs text-gray-400 flex items-center gap-1.5">
-            <span>Executive KPI Dashboard</span>
-            <span class="text-gray-600">•</span>
-            <span class="flex items-center gap-1 text-emerald-400 font-medium">
-              <i data-lucide="database" class="w-3 h-3 text-emerald-400"></i> Fudo POS API Conectada
-            </span>
-          </p>
-        </div>
-      </div>
-
-      <!-- Live Controls & Status -->
-      <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
-        <!-- Live Connection Status Badge -->
-        <div id="status-badge" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
-          <span id="status-text">Fudo En Vivo</span>
-        </div>
-
-        <!-- Account Badge -->
-        <div id="mode-badge" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium flex items-center gap-1.5 cursor-pointer" onclick="openPermissionsModal()">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span id="mode-text">Cuenta: beakers2</span>
-        </div>
-
-        <!-- Chilean Local Time -->
-        <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300 font-mono-numbers flex items-center gap-1.5 hidden sm:flex">
-          <i data-lucide="clock" class="w-3.5 h-3.5 text-gray-400"></i>
-          <span id="clock-display">--:--:--</span>
-        </div>
-
-        <!-- Refresh Button -->
-        <button id="btn-refresh" onclick="refreshDashboard(true)" class="px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-brand-600/25 active:scale-95">
-          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-          <span>Actualizar Fudo</span>
-        </button>
-
-        <!-- Credentials / Diagnostics Button -->
-        <button onclick="openPermissionsModal()" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 transition-colors" title="Ver credenciales de la API Fudo">
-          <i data-lucide="settings" class="w-4 h-4 text-brand-400"></i>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
   <!-- MAIN CONTAINER -->
   <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 space-y-8">
 
@@ -128,8 +68,12 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-2 self-end md:self-center shrink-0">
-          <button onclick="refreshDashboard(true)" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-medium transition-all flex items-center gap-1.5">
+        <div class="flex flex-wrap items-center gap-2.5 self-end md:self-center shrink-0">
+          <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300 font-mono-numbers flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-3.5 h-3.5 text-gray-400"></i>
+            <span id="clock-display">--:--:--</span>
+          </div>
+          <button id="btn-refresh" onclick="refreshDashboard(true)" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-medium transition-all flex items-center gap-1.5">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
             <span>Sincronizar Ahora</span>
           </button>
@@ -278,6 +222,195 @@
           <div class="mt-3 text-[11px] text-gray-400 flex items-center justify-between">
             <span>Meses activos: <strong class="text-white">11</strong></span>
             <span class="text-emerald-400 font-medium">Acumulado</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- SECCIÓN: VENTAS Y GASTOS CLAVE ÚLTIMOS 3 MESES           -->
+    <!-- ======================================================== -->
+    <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-blue-500/20 bg-gradient-to-br from-dark-800 via-dark-800 to-blue-950/20">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="wallet" class="w-5 h-5 text-blue-400"></i>
+              Total de Ventas y Gastos Clave: Últimos 3 Meses
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+              Agosto - Octubre 2026
+            </span>
+          </div>
+          <p class="text-xs text-gray-400 mt-1">Consolidado de ventas brutas (Fudo POS) contrastadas con Facturas Recibidas y Monto de Arriendo</p>
+        </div>
+        <div class="text-xs text-gray-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+          <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-400"></i>
+          <span>Moneda: <strong class="text-white">CLP ($)</strong> • Cierre contable mensual</span>
+        </div>
+      </div>
+
+      <!-- 4 SUMMARY CONSOLIDATED CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <!-- TOTAL VENTAS 3 MESES -->
+        <div class="p-4 rounded-xl bg-white/5 border border-blue-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-blue-300">Ventas 3 Meses (Fudo)</span>
+            <i data-lucide="trending-up" class="w-4 h-4 text-blue-400"></i>
+          </div>
+          <div id="kpi-3m-sales" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 198.051.112</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Promedio: <strong class="text-blue-300 font-mono">$ 66.017.037</strong> / mes</p>
+        </div>
+
+        <!-- TOTAL FACTURAS RECIBIDAS -->
+        <div class="p-4 rounded-xl bg-white/5 border border-red-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-red-300">Facturas Recibidas</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-bold">40.0%</span>
+          </div>
+          <div id="kpi-3m-invoices" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 79.227.778</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Compras y costos de insumos/proveedores</p>
+        </div>
+
+        <!-- TOTAL ARRIENDO -->
+        <div class="p-4 rounded-xl bg-white/5 border border-amber-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-300">Arriendo Local (3 Meses)</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">7.1%</span>
+          </div>
+          <div id="kpi-3m-rent" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 14.107.438</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Monto fijo mensual (~$ 4.7M)</p>
+        </div>
+
+        <!-- MARGEN OPERATIVO RESULTANTE -->
+        <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Remanente Operativo</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">52.9%</span>
+          </div>
+          <div id="kpi-3m-margin" class="text-2xl font-black text-emerald-300 font-mono-numbers mt-1">$ 104.715.896</div>
+          <p class="text-[11px] text-emerald-400/80 mt-1.5">Venta libre de facturas y arriendo</p>
+        </div>
+      </div>
+
+      <!-- 3 MONTHS DETAILED BREAKDOWN (OCT, SEP, AGO) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- OCTUBRE 2026 -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+              <h3 class="text-sm font-bold text-white">Octubre 2026</h3>
+            </div>
+            <span class="text-[11px] font-mono text-gray-400 bg-white/5 px-2 py-0.5 rounded">Mes 10</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-400">Total Venta Fudo:</span>
+              <strong id="m10-sales" class="text-white font-mono text-sm">$ 63.961.266</strong>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-red-500/10 border border-red-500/20">
+              <span class="text-red-300">Facturas Recibidas:</span>
+              <div class="text-right">
+                <strong id="m10-invoices" class="text-white font-mono">$ 24.747.769</strong>
+                <span id="m10-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(38.7%)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
+              <span class="text-amber-300">Monto Arriendo:</span>
+              <div class="text-right">
+                <strong id="m10-rent" class="text-white font-mono">$ 4.711.018</strong>
+                <span id="m10-rent-rate" class="text-[10px] text-amber-300 font-mono ml-1">(7.4%)</span>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+              <span class="text-gray-400">Egresos Clave:</span>
+              <strong id="m10-expenses" class="text-gray-300 font-mono">$ 29.458.787</strong>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
+              <strong id="m10-balance" class="text-emerald-400 font-mono font-bold">$ 34.502.479</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEPTIEMBRE 2026 -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+              <h3 class="text-sm font-bold text-white">Septiembre 2026</h3>
+            </div>
+            <span class="text-[11px] font-mono text-gray-400 bg-white/5 px-2 py-0.5 rounded">Mes 9</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-400">Total Venta Fudo:</span>
+              <strong id="m9-sales" class="text-white font-mono text-sm">$ 61.355.284</strong>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-red-500/10 border border-red-500/20">
+              <span class="text-red-300">Facturas Recibidas:</span>
+              <div class="text-right">
+                <strong id="m9-invoices" class="text-white font-mono">$ 25.022.624</strong>
+                <span id="m9-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(40.8%)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
+              <span class="text-amber-300">Monto Arriendo:</span>
+              <div class="text-right">
+                <strong id="m9-rent" class="text-white font-mono">$ 4.699.360</strong>
+                <span id="m9-rent-rate" class="text-[10px] text-amber-300 font-mono ml-1">(7.7%)</span>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+              <span class="text-gray-400">Egresos Clave:</span>
+              <strong id="m9-expenses" class="text-gray-300 font-mono">$ 29.721.984</strong>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
+              <strong id="m9-balance" class="text-emerald-400 font-mono font-bold">$ 31.633.300</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- AGOSTO 2026 -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-white/10">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <h3 class="text-sm font-bold text-white">Agosto 2026</h3>
+            </div>
+            <span class="text-[11px] font-mono text-gray-400 bg-white/5 px-2 py-0.5 rounded">Mes 8</span>
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-400">Total Venta Fudo:</span>
+              <strong id="m8-sales" class="text-white font-mono text-sm">$ 72.734.562</strong>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-red-500/10 border border-red-500/20">
+              <span class="text-red-300">Facturas Recibidas:</span>
+              <div class="text-right">
+                <strong id="m8-invoices" class="text-white font-mono">$ 29.457.385</strong>
+                <span id="m8-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(40.5%)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
+              <span class="text-amber-300">Monto Arriendo:</span>
+              <div class="text-right">
+                <strong id="m8-rent" class="text-white font-mono">$ 4.697.060</strong>
+                <span id="m8-rent-rate" class="text-[10px] text-amber-300 font-mono ml-1">(6.5%)</span>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
+              <span class="text-gray-400">Egresos Clave:</span>
+              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 34.154.445</strong>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
+              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 38.580.117</strong>
+            </div>
           </div>
         </div>
 
@@ -517,7 +650,44 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- SECCIÓN 6: TOP PLATOS VENDIDOS VS TOP LICORES / BAR      -->
+    <!-- SECCIÓN 6: GRÁFICOS COMPLEMENTARIOS                      -->
+    <!-- ======================================================== -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- PROGRESIÓN MENSUAL AÑO EN CURSO -->
+      <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="bar-chart-2" class="w-4 h-4 text-emerald-400"></i>
+              Progresión Mensual 2026: Ventas y Descuentos
+            </h3>
+            <p class="text-xs text-gray-400">Evolución de Enero a Noviembre 2026 en Fudo</p>
+          </div>
+          <span class="text-xs text-emerald-400 font-mono">CLP ($)</span>
+        </div>
+        <div id="chart-monthly-progression" class="w-full h-72"></div>
+      </div>
+
+      <!-- DISTRIBUCIÓN HORARIA DE VENTAS ÚLTIMO MES -->
+      <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="clock-4" class="w-4 h-4 text-purple-400"></i>
+              Distribución Horaria de Ventas Último Mes (Octubre)
+            </h3>
+            <p class="text-xs text-gray-400">Curva de demanda acumulada en horario de atención (Octubre 2026)</p>
+          </div>
+          <span class="text-xs text-purple-400 font-mono bg-purple-500/10 px-2.5 py-1 rounded-md border border-purple-500/20">12:00 - 02:00</span>
+        </div>
+        <div id="chart-hourly" class="w-full h-72"></div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- SECCIÓN 7: TOP PLATOS VENDIDOS Y TOP LICORES / BAR       -->
     <!-- ======================================================== -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       
@@ -585,43 +755,6 @@
             </tbody>
           </table>
         </div>
-      </div>
-
-    </div>
-
-    <!-- ======================================================== -->
-    <!-- SECCIÓN 7: GRÁFICOS COMPLEMENTARIOS                      -->
-    <!-- ======================================================== -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-      <!-- PROGRESIÓN MENSUAL AÑO EN CURSO -->
-      <div class="glass-card rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="bar-chart-2" class="w-4 h-4 text-emerald-400"></i>
-              Progresión Mensual 2026: Ventas y Descuentos
-            </h3>
-            <p class="text-xs text-gray-400">Evolución de Enero a Noviembre 2026 en Fudo</p>
-          </div>
-          <span class="text-xs text-emerald-400 font-mono">CLP ($)</span>
-        </div>
-        <div id="chart-monthly-progression" class="w-full h-72"></div>
-      </div>
-
-      <!-- VENTAS POR HORA HOY -->
-      <div class="glass-card rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-base font-bold text-white flex items-center gap-2">
-              <i data-lucide="clock-4" class="w-4 h-4 text-purple-400"></i>
-              Distribución Horaria de Ventas Hoy
-            </h3>
-            <p class="text-xs text-gray-400">Curva de demanda en horario de restaurante</p>
-          </div>
-          <span class="text-xs text-purple-400 font-mono">12:00 - 00:00</span>
-        </div>
-        <div id="chart-hourly" class="w-full h-72"></div>
       </div>
 
     </div>

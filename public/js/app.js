@@ -59,6 +59,7 @@ async function refreshDashboard(force = false) {
 
     updateStatusIndicators(data);
     renderMetrics(data.metrics);
+    renderLast3Months(data.metrics?.last3Months);
     renderCashSales(data.metrics?.cashSales);
     renderCashWithdrawals(data.metrics?.cashWithdrawals);
     renderSameMonthCards(data.metrics?.sameMonthThreeYears?.comparison || []);
@@ -81,17 +82,58 @@ function updateStatusIndicators(data) {
   const modeBadge = document.getElementById('mode-badge');
   const modeText = document.getElementById('mode-text');
 
-  if (data.source === 'live_fudo') {
-    statusBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2';
-    statusText.textContent = 'Fudo En Vivo';
-    modeBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium flex items-center gap-1.5';
-    modeText.textContent = 'Cuenta: beakers2';
-  } else {
-    statusBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold flex items-center gap-2';
-    statusText.textContent = 'Fudo Modo Seguro';
-    modeBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium flex items-center gap-1.5 cursor-pointer';
-    modeText.textContent = 'Permisos Pendientes';
+  if (statusBadge && statusText) {
+    if (data.source === 'live_fudo') {
+      statusBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2';
+      statusText.textContent = 'Fudo En Vivo';
+      if (modeBadge && modeText) {
+        modeBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium flex items-center gap-1.5';
+        modeText.textContent = 'Cuenta: beakers2';
+      }
+    } else {
+      statusBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold flex items-center gap-2';
+      statusText.textContent = 'Fudo Modo Seguro';
+      if (modeBadge && modeText) {
+        modeBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium flex items-center gap-1.5 cursor-pointer';
+        modeText.textContent = 'Permisos Pendientes';
+      }
+    }
   }
+}
+
+// Render Last 3 Months (Sales, Invoices, Rent)
+function renderLast3Months(last3Months) {
+  if (!last3Months) return;
+
+  const totalSalesEl = document.getElementById('kpi-3m-sales');
+  const totalInvoicesEl = document.getElementById('kpi-3m-invoices');
+  const totalRentEl = document.getElementById('kpi-3m-rent');
+  const totalMarginEl = document.getElementById('kpi-3m-margin');
+
+  if (totalSalesEl) totalSalesEl.textContent = formatCLP(last3Months.totalSales);
+  if (totalInvoicesEl) totalInvoicesEl.textContent = formatCLP(last3Months.totalInvoices);
+  if (totalRentEl) totalRentEl.textContent = formatCLP(last3Months.totalRent);
+  if (totalMarginEl) totalMarginEl.textContent = formatCLP(last3Months.totalOperatingBalance);
+
+  const months = last3Months.months || [];
+  months.forEach(m => {
+    const prefix = `m${m.month}`;
+    const salesEl = document.getElementById(`${prefix}-sales`);
+    const invEl = document.getElementById(`${prefix}-invoices`);
+    const invRateEl = document.getElementById(`${prefix}-invoices-rate`);
+    const rentEl = document.getElementById(`${prefix}-rent`);
+    const rentRateEl = document.getElementById(`${prefix}-rent-rate`);
+    const expEl = document.getElementById(`${prefix}-expenses`);
+    const balEl = document.getElementById(`${prefix}-balance`);
+
+    if (salesEl) salesEl.textContent = formatCLP(m.sales);
+    if (invEl) invEl.textContent = formatCLP(m.invoicesReceived);
+    if (invRateEl) invRateEl.textContent = `${m.invoicesRate}%`;
+    if (rentEl) rentEl.textContent = formatCLP(m.rent);
+    if (rentRateEl) rentRateEl.textContent = `${m.rentRate}%`;
+    if (expEl) expEl.textContent = formatCLP(m.totalExpenses);
+    if (balEl) balEl.textContent = formatCLP(m.operatingBalance);
+  });
 }
 
 // Populate Primary Metric Cards
@@ -391,11 +433,11 @@ function renderCharts(charts, metrics) {
   chartMonthly = new ApexCharts(document.querySelector("#chart-monthly-progression"), monthlyOptions);
   chartMonthly.render();
 
-  // 3. HOURLY SALES TODAY
-  const hourlyData = charts.hourlyToday || [];
+  // 3. HOURLY SALES LAST MONTH (OCTUBRE)
+  const hourlyData = charts.hourlyLastMonth || charts.hourlyMonth || charts.hourlyToday || [];
   const hourlyOptions = {
     series: [{
-      name: 'Ventas por Hora',
+      name: 'Ventas Acumuladas Mes (Octubre)',
       data: hourlyData.map(h => h.sales)
     }],
     chart: {
@@ -416,7 +458,7 @@ function renderCharts(charts, metrics) {
     yaxis: {
       labels: {
         style: { colors: '#9ca3af' },
-        formatter: val => '$ ' + (val / 1000).toFixed(0) + 'K'
+        formatter: val => '$ ' + (val >= 1000000 ? (val / 1000000).toFixed(1) + 'M' : (val / 1000).toFixed(0) + 'K')
       }
     },
     grid: { borderColor: 'rgba(255, 255, 255, 0.06)', strokeDashArray: 4 },

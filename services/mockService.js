@@ -154,7 +154,7 @@ class MockService {
       { name: 'Descuento Personal Steakout', amount: Math.round(discountsMonth * 0.12), percentage: 12 }
     ];
 
-    // Hourly distribution today
+    // Hourly distribution today & last month
     const hourlySalesToday = [
       { hour: '12:00', sales: 125000, orders: 4 },
       { hour: '13:00', sales: 340000, orders: 11 },
@@ -168,6 +168,73 @@ class MockService {
       { hour: '21:00', sales: 290900, orders: 9 },
       { hour: '22:00', sales: 170000, orders: 5 }
     ];
+
+    const hourlySalesMonth = [
+      { hour: '12:00', sales: 486461 },
+      { hour: '13:00', sales: 4308834 },
+      { hour: '14:00', sales: 4070668 },
+      { hour: '15:00', sales: 1708673 },
+      { hour: '16:00', sales: 1696852 },
+      { hour: '17:00', sales: 2149053 },
+      { hour: '18:00', sales: 3248988 },
+      { hour: '19:00', sales: 7065178 },
+      { hour: '20:00', sales: 10298192 },
+      { hour: '21:00', sales: 11740938 },
+      { hour: '22:00', sales: 6712405 },
+      { hour: '23:00', sales: 5329851 },
+      { hour: '00:00', sales: 3750945 },
+      { hour: '01:00', sales: 1238070 },
+      { hour: '02:00', sales: 152159 }
+    ];
+
+    const last3MonthsData = [
+      {
+        year: 2026,
+        month: 10,
+        monthName: 'Octubre',
+        sales: 63961266,
+        invoicesReceived: 24747769,
+        rent: 4711018,
+        invoicesRate: 38.7,
+        rentRate: 7.4,
+        totalExpenses: 29458787,
+        operatingBalance: 34502479
+      },
+      {
+        year: 2026,
+        month: 9,
+        monthName: 'Septiembre',
+        sales: 61355284,
+        invoicesReceived: 25022624,
+        rent: 4699360,
+        invoicesRate: 40.8,
+        rentRate: 7.7,
+        totalExpenses: 29721984,
+        operatingBalance: 31633300
+      },
+      {
+        year: 2026,
+        month: 8,
+        monthName: 'Agosto',
+        sales: 72734562,
+        invoicesReceived: 29457385,
+        rent: 4697060,
+        invoicesRate: 40.5,
+        rentRate: 6.5,
+        totalExpenses: 34154445,
+        operatingBalance: 38580117
+      }
+    ];
+
+    const last3Months = {
+      period: 'Agosto - Octubre 2026',
+      totalSales: 198051112,
+      totalInvoices: 79227778,
+      totalRent: 14107438,
+      totalExpenses: 93335216,
+      totalOperatingBalance: 104715896,
+      months: last3MonthsData
+    };
 
     return {
       restaurant: 'Steakout',
@@ -229,7 +296,8 @@ class MockService {
             rate: discountsYearRate
           },
           breakdown: discountBreakdown
-        }
+        },
+        last3Months
       },
       charts: {
         weeklyDays: weekDailyBreakdown,
@@ -238,7 +306,9 @@ class MockService {
         channels: channelDistribution,
         rooms: roomDistribution,
         topProducts: topProducts,
-        hourlyToday: hourlySalesToday
+        hourlyToday: hourlySalesToday,
+        hourlyMonth: hourlySalesMonth,
+        hourlyLastMonth: hourlySalesMonth
       }
     };
   }

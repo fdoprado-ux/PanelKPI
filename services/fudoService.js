@@ -365,14 +365,70 @@ class FudoService {
       }
     ];
 
-    // 7. Hourly distribution today
+    // 7. Hourly distribution last month (Octubre) & today
+    const sortedHoursMonth = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00'];
+    const hourlyMonth = sortedHoursMonth.map(h => ({
+      hour: h,
+      sales: Math.round(monthRes.hourlyCounts[h] || 0)
+    }));
+
     const sortedHours = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00'];
     const hourlyToday = sortedHours.map(h => ({
       hour: h,
       sales: todayRes.hourlyCounts[h] || 0
     }));
 
-    // 8. Rankings & Cash Data (Loaded from verified Fudo computations)
+    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with received invoices and rent
+    const last3MonthsData = [
+      {
+        year: 2026,
+        month: 10,
+        monthName: 'Octubre',
+        sales: monthRes.totalSales || 63961266,
+        invoicesReceived: 24747769,
+        rent: 4711018,
+        invoicesRate: Number(((24747769 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
+        rentRate: Number(((4711018 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
+        totalExpenses: 24747769 + 4711018,
+        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 4711018)
+      },
+      {
+        year: 2026,
+        month: 9,
+        monthName: 'Septiembre',
+        sales: 61355284,
+        invoicesReceived: 25022624,
+        rent: 4699360,
+        invoicesRate: Number(((25022624 / 61355284) * 100).toFixed(1)),
+        rentRate: Number(((4699360 / 61355284) * 100).toFixed(1)),
+        totalExpenses: 25022624 + 4699360,
+        operatingBalance: 61355284 - (25022624 + 4699360)
+      },
+      {
+        year: 2026,
+        month: 8,
+        monthName: 'Agosto',
+        sales: 72734562,
+        invoicesReceived: 29457385,
+        rent: 4697060,
+        invoicesRate: Number(((29457385 / 72734562) * 100).toFixed(1)),
+        rentRate: Number(((4697060 / 72734562) * 100).toFixed(1)),
+        totalExpenses: 29457385 + 4697060,
+        operatingBalance: 72734562 - (29457385 + 4697060)
+      }
+    ];
+
+    const last3Months = {
+      period: 'Agosto - Octubre 2026',
+      totalSales: last3MonthsData.reduce((acc, m) => acc + m.sales, 0),
+      totalInvoices: last3MonthsData.reduce((acc, m) => acc + m.invoicesReceived, 0),
+      totalRent: last3MonthsData.reduce((acc, m) => acc + m.rent, 0),
+      totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
+      totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
+      months: last3MonthsData
+    };
+
+    // 9. Rankings & Cash Data (Loaded from verified Fudo computations)
     const topFood = this.rankingsAndCash?.topFood || [];
     const topBar = this.rankingsAndCash?.topBar || [];
     const cashWithdrawals = this.rankingsAndCash?.cashWithdrawals || {
@@ -447,12 +503,15 @@ class FudoService {
           }
         },
         cashWithdrawals,
-        cashSales
+        cashSales,
+        last3Months
       },
       charts: {
         monthlyProgression,
         sameMonthComparison,
         hourlyToday,
+        hourlyMonth,
+        hourlyLastMonth: hourlyMonth,
         topFood,
         topBar
       }
