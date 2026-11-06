@@ -1,0 +1,20 @@
+{
+  "withdrawals": {
+    "today": 0,
+    "week": 260780.0,
+    "month": 2848750.0,
+    "year": 30468098.0
+  },
+  "withdrawals_counts": {
+    "today": 0,
+    "week": 5,
+    "month": 26,
+    "year": 304
+  },
+  "cash_sales": {
+    "today": 85410.0,
+    "week": 352844.0,
+    "month": 2995879.0,
+    "year": 30549834.8
+  }
+}

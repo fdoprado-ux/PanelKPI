@@ -1,0 +1,170 @@
+{
+  "topFood": [
+    {
+      "rank": 1,
+      "name": "BUFFET LIBRE",
+      "category": "Platos Principales",
+      "price": 37900,
+      "units": 145,
+      "revenue": 5446130
+    },
+    {
+      "rank": 2,
+      "name": "BACON CHEESE BURGER",
+      "category": "Hamburguesas",
+      "price": 11300,
+      "units": 118,
+      "revenue": 1333120
+    },
+    {
+      "rank": 3,
+      "name": "STEAKOUT BURGER SIMPLE",
+      "category": "Hamburguesas",
+      "price": 14700,
+      "units": 76,
+      "revenue": 1114960
+    },
+    {
+      "rank": 4,
+      "name": "BABY BACK RIBS",
+      "category": "From The SMOKER",
+      "price": 15990,
+      "units": 68,
+      "revenue": 1087320
+    },
+    {
+      "rank": 5,
+      "name": "CHICKEN TENDERS",
+      "category": "Starters",
+      "price": 9490,
+      "units": 89,
+      "revenue": 844610
+    },
+    {
+      "rank": 6,
+      "name": "SMOKED SAMPLER",
+      "category": "From The SMOKER",
+      "price": 11500,
+      "units": 62,
+      "revenue": 713000
+    },
+    {
+      "rank": 7,
+      "name": "SIDE PAPAS FRITAS",
+      "category": "Sides & Starters",
+      "price": 5500,
+      "units": 98,
+      "revenue": 538920
+    },
+    {
+      "rank": 8,
+      "name": "MOZZARELLA STICKS",
+      "category": "Starters",
+      "price": 5600,
+      "units": 54,
+      "revenue": 302400
+    }
+  ],
+  "topBar": [
+    {
+      "rank": 1,
+      "name": "MISTRAL 35",
+      "category": "Pisco",
+      "price": 8340,
+      "units": 280,
+      "revenue": 2335320
+    },
+    {
+      "rank": 2,
+      "name": "PROMO PISCO SOUR",
+      "category": "Cocteler\u00eda",
+      "price": 7200,
+      "units": 352,
+      "revenue": 2533000
+    },
+    {
+      "rank": 3,
+      "name": "SCHOP CALAFATE",
+      "category": "Cerveza Austral",
+      "price": 9240,
+      "units": 177,
+      "revenue": 1635270
+    },
+    {
+      "rank": 4,
+      "name": "GREENWICH",
+      "category": "Cocteler\u00eda STEAKOUT",
+      "price": 8950,
+      "units": 154,
+      "revenue": 1378000
+    },
+    {
+      "rank": 5,
+      "name": "SCHOP HEINEKEN",
+      "category": "Cerveza Schop",
+      "price": 7890,
+      "units": 160,
+      "revenue": 1263180
+    },
+    {
+      "rank": 6,
+      "name": "SANGRIA STEAKOUT",
+      "category": "Cocteler\u00eda Jarra",
+      "price": 8440,
+      "units": 136,
+      "revenue": 1148100
+    },
+    {
+      "rank": 7,
+      "name": "REFILL BEBIDA",
+      "category": "Sin Alcohol",
+      "price": 5660,
+      "units": 143,
+      "revenue": 809970
+    },
+    {
+      "rank": 8,
+      "name": "COCA COLA ZERO LATA",
+      "category": "Bebidas",
+      "price": 4470,
+      "units": 137,
+      "revenue": 612460
+    }
+  ],
+  "cashWithdrawals": {
+    "today": {
+      "amount": 0,
+      "count": 0
+    },
+    "week": {
+      "amount": 260780,
+      "count": 5
+    },
+    "month": {
+      "amount": 2848750,
+      "count": 26
+    },
+    "year": {
+      "amount": 30468098,
+      "count": 304
+    }
+  },
+  "cashSales": {
+    "today": {
+      "amount": 85410,
+      "rate": 3.1
+    },
+    "week": {
+      "amount": 352844,
+      "rate": 2.5
+    },
+    "month": {
+      "amount": 2995879,
+      "rate": 4.7
+    },
+    "year": {
+      "amount": 30549835,
+      "rate": 4.8
+    }
+  }
+}

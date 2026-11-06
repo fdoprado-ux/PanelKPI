@@ -1,0 +1,73 @@
+{
+  "monthly": [
+    {
+      "month": "Ene",
+      "sales": 55302658.0,
+      "orders": 1641,
+      "discounts": 6606539.5
+    },
+    {
+      "month": "Feb",
+      "sales": 56001555.0,
+      "orders": 1742,
+      "discounts": 2393357.5
+    },
+    {
+      "month": "Mar",
+      "sales": 59762881.0,
+      "orders": 1700,
+      "discounts": 3007369.5
+    },
+    {
+      "month": "Abr",
+      "sales": 58809419.5,
+      "orders": 1824,
+      "discounts": 4000476.0
+    },
+    {
+      "month": "May",
+      "sales": 67892250.0,
+      "orders": 1981,
+      "discounts": 3325892.0
+    },
+    {
+      "month": "Jun",
+      "sales": 59491932.0,
+      "orders": 1664,
+      "discounts": 3232077.5
+    },
+    {
+      "month": "Jul",
+      "sales": 74276921.0,
+      "orders": 2283,
+      "discounts": 3436559.0
+    },
+    {
+      "month": "Ago",
+      "sales": 72734561.5,
+      "orders": 2309,
+      "discounts": 4574157.0
+    },
+    {
+      "month": "Sep",
+      "sales": 61355283.5,
+      "orders": 2121,
+      "discounts": 3394636.0
+    },
+    {
+      "month": "Oct",
+      "sales": 63961266.0,
+      "orders": 2182,
+      "discounts": 2425240.0
+    },
+    {
+      "month": "Nov",
+      "sales": 9661655.0,
+      "orders": 312,
+      "discounts": 481886.0
+    }
+  ],
+  "year_sales": 639250382.5,
+  "year_orders": 19759,
+  "year_discounts": 36878190.0
+}

@@ -1,0 +1,28 @@
+{
+  "monthly_2026": [
+    { "month": "Ene", "sales": 55302658, "orders": 1641, "discounts": 6606540 },
+    { "month": "Feb", "sales": 56001555, "orders": 1742, "discounts": 2393358 },
+    { "month": "Mar", "sales": 59762881, "orders": 1700, "discounts": 3007370 },
+    { "month": "Abr", "sales": 58809420, "orders": 1824, "discounts": 4000476 },
+    { "month": "May", "sales": 67892250, "orders": 1981, "discounts": 3325892 },
+    { "month": "Jun", "sales": 59491932, "orders": 1664, "discounts": 3232078 },
+    { "month": "Jul", "sales": 74276921, "orders": 2283, "discounts": 3436559 },
+    { "month": "Ago", "sales": 72734562, "orders": 2309, "discounts": 4574157 },
+    { "month": "Sep", "sales": 61355284, "orders": 2121, "discounts": 3394636 },
+    { "month": "Oct", "sales": 63961266, "orders": 2182, "discounts": 2425240 }
+  ],
+  "same_month_3_years": {
+    "october_full": [
+      { "year": 2023, "sales": 89788480, "orders": 2580, "avgTicket": 34802 },
+      { "year": 2024, "sales": 91463778, "orders": 2399, "avgTicket": 38126 },
+      { "year": 2025, "sales": 67778320, "orders": 1832, "avgTicket": 36997 },
+      { "year": 2026, "sales": 63961266, "orders": 2182, "avgTicket": 29313 }
+    ],
+    "november_mtd": [
+      { "year": 2023, "sales": 15000438, "orders": 414, "avgTicket": 36233 },
+      { "year": 2024, "sales": 11484975, "orders": 277, "avgTicket": 41462 },
+      { "year": 2025, "sales": 8637867, "orders": 246, "avgTicket": 35113 },
+      { "year": 2026, "sales": 9661655, "orders": 312, "avgTicket": 30967 }
+    ]
+  }
+}

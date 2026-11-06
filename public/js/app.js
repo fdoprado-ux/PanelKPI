@@ -1,0 +1,443 @@
+/**
+ * Steakout KPI Dashboard - Frontend Controller v1.2
+ */
+
+// Global chart references
+let chartSameMonth = null;
+let chartMonthly = null;
+let chartHourly = null;
+
+// Currency Formatter for Chilean Peso (CLP)
+function formatCLP(value) {
+  if (value === undefined || value === null) return '$ 0';
+  return '$ ' + Math.round(value).toLocaleString('es-CL');
+}
+
+// Format numbers
+function formatNum(value) {
+  if (value === undefined || value === null) return '0';
+  return Math.round(value).toLocaleString('es-CL');
+}
+
+// Live Chilean Clock (America/Santiago)
+function updateClock() {
+  const clockEl = document.getElementById('clock-display');
+  if (!clockEl) return;
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString('es-CL', { timeZone: 'America/Santiago', hour12: false });
+  clockEl.textContent = `${timeStr} (CLST)`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Modal Handlers
+function openPermissionsModal() {
+  const modal = document.getElementById('permissions-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    if (window.lucide) lucide.createIcons();
+  }
+}
+
+function closePermissionsModal() {
+  const modal = document.getElementById('permissions-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+// Main Dashboard Data Loader
+async function refreshDashboard(force = false) {
+  const refreshBtn = document.getElementById('btn-refresh');
+  if (refreshBtn) refreshBtn.classList.add('opacity-70', 'pointer-events-none');
+
+  try {
+    const res = await fetch(`/api/metrics${force ? '?force=true' : ''}`);
+    const data = await res.json();
+
+    updateStatusIndicators(data);
+    renderMetrics(data.metrics);
+    renderCashSales(data.metrics?.cashSales);
+    renderCashWithdrawals(data.metrics?.cashWithdrawals);
+    renderSameMonthCards(data.metrics?.sameMonthThreeYears?.comparison || []);
+    renderTopFoodTable(data.charts?.topFood || []);
+    renderTopBarTable(data.charts?.topBar || []);
+    renderCharts(data.charts, data.metrics);
+
+  } catch (err) {
+    console.error('Error fetching metrics:', err);
+  } finally {
+    if (refreshBtn) refreshBtn.classList.remove('opacity-70', 'pointer-events-none');
+    if (window.lucide) lucide.createIcons();
+  }
+}
+
+// Update UI Indicators
+function updateStatusIndicators(data) {
+  const statusBadge = document.getElementById('status-badge');
+  const statusText = document.getElementById('status-text');
+  const modeBadge = document.getElementById('mode-badge');
+  const modeText = document.getElementById('mode-text');
+
+  if (data.source === 'live_fudo') {
+    statusBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2';
+    statusText.textContent = 'Fudo En Vivo';
+    modeBadge.className = 'px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium flex items-center gap-1.5';
+    modeText.textContent = 'Cuenta: beakers2';
+  } else {
+    statusBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold flex items-center gap-2';
+    statusText.textContent = 'Fudo Modo Seguro';
+    modeBadge.className = 'px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium flex items-center gap-1.5 cursor-pointer';
+    modeText.textContent = 'Permisos Pendientes';
+  }
+}
+
+// Populate Primary Metric Cards
+function renderMetrics(metrics) {
+  if (!metrics) return;
+
+  // 1. Sales
+  // Today
+  document.getElementById('kpi-today-sales').textContent = formatCLP(metrics.today.sales);
+  document.getElementById('kpi-today-orders').textContent = formatNum(metrics.today.orders);
+  document.getElementById('kpi-today-ticket').textContent = formatCLP(metrics.today.avgTicket);
+  if (metrics.today.progress !== undefined) {
+    document.getElementById('kpi-today-progress-txt').textContent = `${metrics.today.progress}%`;
+    document.getElementById('kpi-today-progress-bar').style.width = `${metrics.today.progress}%`;
+  }
+
+  // Week
+  document.getElementById('kpi-week-sales').textContent = formatCLP(metrics.week.sales);
+  document.getElementById('kpi-week-orders').textContent = formatNum(metrics.week.orders);
+  document.getElementById('kpi-week-ticket').textContent = formatCLP(metrics.week.avgTicket);
+  const weekDailyAvg = Math.round(metrics.week.sales / 7);
+  document.getElementById('kpi-week-daily-avg').textContent = formatCLP(weekDailyAvg);
+
+  // Month
+  document.getElementById('kpi-month-sales').textContent = formatCLP(metrics.month.sales);
+  document.getElementById('kpi-month-orders').textContent = formatNum(metrics.month.orders);
+  document.getElementById('kpi-month-ticket').textContent = formatCLP(metrics.month.avgTicket);
+  const monthWeeklyAvg = Math.round(metrics.month.sales / 4);
+  document.getElementById('kpi-month-week-avg').textContent = formatCLP(monthWeeklyAvg);
+
+  // Year
+  document.getElementById('kpi-year-sales').textContent = formatCLP(metrics.year.sales);
+  document.getElementById('kpi-year-orders').textContent = formatNum(metrics.year.orders);
+  document.getElementById('kpi-year-ticket').textContent = formatCLP(metrics.year.avgTicket);
+
+  // 2. Discounts
+  // Today
+  document.getElementById('disc-today-amount').textContent = formatCLP(metrics.discounts.today.amount);
+  document.getElementById('disc-today-rate').textContent = `${metrics.discounts.today.rate}%`;
+
+  // Week
+  document.getElementById('disc-week-amount').textContent = formatCLP(metrics.discounts.week.amount);
+  document.getElementById('disc-week-rate').textContent = `${metrics.discounts.week.rate}%`;
+
+  // Month
+  document.getElementById('disc-month-amount').textContent = formatCLP(metrics.discounts.month.amount);
+  document.getElementById('disc-month-rate').textContent = `${metrics.discounts.month.rate}%`;
+
+  // Year
+  document.getElementById('disc-year-amount').textContent = formatCLP(metrics.discounts.year.amount);
+  document.getElementById('disc-year-rate').textContent = `${metrics.discounts.year.rate}%`;
+}
+
+// Populate Cash Sales Section (Efectivo)
+function renderCashSales(cashSales) {
+  if (!cashSales) return;
+
+  document.getElementById('cash-sale-today').textContent = formatCLP(cashSales.today?.amount);
+  document.getElementById('cash-sale-today-pct').textContent = `${cashSales.today?.rate || 3.1}%`;
+
+  document.getElementById('cash-sale-week').textContent = formatCLP(cashSales.week?.amount);
+  document.getElementById('cash-sale-week-pct').textContent = `${cashSales.week?.rate || 2.5}%`;
+
+  document.getElementById('cash-sale-month').textContent = formatCLP(cashSales.month?.amount);
+  document.getElementById('cash-sale-month-pct').textContent = `${cashSales.month?.rate || 4.7}%`;
+
+  document.getElementById('cash-sale-year').textContent = formatCLP(cashSales.year?.amount);
+  document.getElementById('cash-sale-year-pct').textContent = `${cashSales.year?.rate || 4.8}%`;
+}
+
+// Populate Cash Withdrawals Section (Retiros de Caja)
+function renderCashWithdrawals(withdrawals) {
+  if (!withdrawals) return;
+
+  document.getElementById('withdrawal-today-amount').textContent = formatCLP(withdrawals.today?.amount);
+  document.getElementById('withdrawal-today-count').textContent = `${withdrawals.today?.count || 0} retiros`;
+
+  document.getElementById('withdrawal-week-amount').textContent = formatCLP(withdrawals.week?.amount);
+  document.getElementById('withdrawal-week-count').textContent = `${withdrawals.week?.count || 5} retiros`;
+
+  document.getElementById('withdrawal-month-amount').textContent = formatCLP(withdrawals.month?.amount);
+  document.getElementById('withdrawal-month-count').textContent = `${withdrawals.month?.count || 26} retiros`;
+
+  document.getElementById('withdrawal-year-amount').textContent = formatCLP(withdrawals.year?.amount);
+  document.getElementById('withdrawal-year-count').textContent = `${withdrawals.year?.count || 304} retiros`;
+}
+
+// Render Same Month 3 Previous Years Cards
+function renderSameMonthCards(comparisonList) {
+  const container = document.getElementById('same-month-cards-container');
+  if (!container || !comparisonList.length) return;
+
+  container.innerHTML = comparisonList.map((item, idx) => {
+    const isCurrent = idx === comparisonList.length - 1;
+    const growthTag = item.growthYoY !== 0 
+      ? `<span class="mt-2 inline-block text-[11px] font-bold font-mono ${item.growthYoY > 0 ? 'text-emerald-400' : 'text-rose-400'}">${item.growthYoY > 0 ? '+' : ''}${item.growthYoY}% YoY</span>`
+      : '<span class="mt-2 inline-block text-[11px] text-gray-400">Año Base</span>';
+
+    if (isCurrent) {
+      return `
+        <div class="p-4 rounded-xl bg-brand-500/10 border border-brand-500/30 text-center relative overflow-hidden">
+          <div class="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-brand-500 text-white text-[9px] font-bold rounded">ÚLTIMO</div>
+          <span class="text-xs font-semibold text-brand-300">${item.month} ${item.year}</span>
+          <div class="text-lg lg:text-xl font-extrabold text-brand-400 font-mono-numbers mt-1.5">${formatCLP(item.sales)}</div>
+          <div class="text-xs text-gray-300 mt-1">${formatNum(item.orders)} órdenes • ${formatCLP(item.avgTicket)} prom</div>
+          ${growthTag}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+        <span class="text-xs font-medium text-gray-400">${item.month} ${item.year}</span>
+        <div class="text-lg lg:text-xl font-bold text-white font-mono-numbers mt-1.5">${formatCLP(item.sales)}</div>
+        <div class="text-xs text-gray-500 mt-1">${formatNum(item.orders)} órdenes • ${formatCLP(item.avgTicket)} prom</div>
+        ${growthTag}
+      </div>
+    `;
+  }).join('');
+}
+
+// Render Top Food Table (Cocina)
+function renderTopFoodTable(foodItems) {
+  const tbody = document.getElementById('top-food-tbody');
+  if (!tbody) return;
+
+  if (!foodItems.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500">Sin datos de platos</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = foodItems.map((item, idx) => `
+    <tr class="hover:bg-white/5 transition-colors">
+      <td class="py-2.5 px-3">
+        <span class="w-5 h-5 rounded-full bg-brand-500/20 text-brand-400 font-bold flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+      </td>
+      <td class="py-2.5 px-3 font-semibold text-white">${item.name}</td>
+      <td class="py-2.5 px-3 text-gray-400">
+        <span class="px-2 py-0.5 rounded bg-white/5 text-gray-300 text-[11px]">${item.category}</span>
+      </td>
+      <td class="py-2.5 px-3 text-right font-mono text-gray-300 font-semibold">${formatNum(item.units)} u.</td>
+      <td class="py-2.5 px-3 text-right font-mono font-bold text-amber-400">${formatCLP(item.revenue)}</td>
+    </tr>
+  `).join('');
+}
+
+// Render Top Bar Table (Licores & Bebidas)
+function renderTopBarTable(barItems) {
+  const tbody = document.getElementById('top-bar-tbody');
+  if (!tbody) return;
+
+  if (!barItems.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="py-4 text-center text-gray-500">Sin datos de bar</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = barItems.map((item, idx) => `
+    <tr class="hover:bg-white/5 transition-colors">
+      <td class="py-2.5 px-3">
+        <span class="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-[10px] font-mono">${idx + 1}</span>
+      </td>
+      <td class="py-2.5 px-3 font-semibold text-white">${item.name}</td>
+      <td class="py-2.5 px-3 text-gray-400">
+        <span class="px-2 py-0.5 rounded bg-white/5 text-gray-300 text-[11px]">${item.category}</span>
+      </td>
+      <td class="py-2.5 px-3 text-right font-mono text-gray-300 font-semibold">${formatNum(item.units)} u.</td>
+      <td class="py-2.5 px-3 text-right font-mono font-bold text-purple-300">${formatCLP(item.revenue)}</td>
+    </tr>
+  `).join('');
+}
+
+// Render Remaining ApexCharts
+function renderCharts(charts, metrics) {
+  if (!charts) return;
+
+  // 1. COMPARATIVE SAME MONTH 3 PREVIOUS YEARS
+  const sameMonthData = charts.sameMonthComparison || [];
+  const sameMonthOptions = {
+    series: [{
+      name: 'Ventas Mismo Mes (CLP)',
+      data: sameMonthData.map(d => d.sales)
+    }],
+    chart: {
+      type: 'bar',
+      height: 320,
+      toolbar: { show: false },
+      background: 'transparent'
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 8,
+        columnWidth: '45%',
+        distributed: true,
+        dataLabels: { position: 'top' }
+      }
+    },
+    colors: ['#64748b', '#3b82f6', '#8b5cf6', '#ea580c'],
+    dataLabels: {
+      enabled: true,
+      formatter: val => formatCLP(val),
+      offsetY: -22,
+      style: {
+        fontSize: '11px',
+        fontWeight: 600,
+        colors: ['#f3f4f6']
+      }
+    },
+    xaxis: {
+      categories: sameMonthData.map(d => `${d.month} ${d.year}`),
+      labels: {
+        style: { colors: '#9ca3af', fontSize: '12px', fontWeight: 500 }
+      },
+      axisBorder: { show: false },
+      axisTicks: { show: false }
+    },
+    yaxis: {
+      labels: {
+        style: { colors: '#9ca3af' },
+        formatter: val => '$ ' + (val / 1000000).toFixed(0) + 'M'
+      }
+    },
+    grid: {
+      borderColor: 'rgba(255, 255, 255, 0.06)',
+      strokeDashArray: 4
+    },
+    tooltip: {
+      theme: 'dark',
+      y: { formatter: val => formatCLP(val) }
+    },
+    legend: { show: false }
+  };
+
+  if (chartSameMonth) chartSameMonth.destroy();
+  chartSameMonth = new ApexCharts(document.querySelector("#chart-same-month"), sameMonthOptions);
+  chartSameMonth.render();
+
+  // 2. MONTHLY PROGRESSION 2026 (Ventas + Descuentos)
+  const monthlyData = charts.monthlyProgression || [];
+  const monthlyOptions = {
+    series: [
+      {
+        name: 'Ventas Mensuales',
+        type: 'column',
+        data: monthlyData.map(d => d.sales)
+      },
+      {
+        name: 'Descuentos Totales',
+        type: 'line',
+        data: monthlyData.map(d => d.discounts)
+      }
+    ],
+    chart: {
+      height: 280,
+      type: 'line',
+      toolbar: { show: false },
+      background: 'transparent'
+    },
+    stroke: { width: [0, 3], curve: 'smooth' },
+    plotOptions: {
+      bar: { columnWidth: '50%', borderRadius: 6 }
+    },
+    colors: ['#10b981', '#ef4444'],
+    xaxis: {
+      categories: monthlyData.map(d => d.month),
+      labels: { style: { colors: '#9ca3af', fontSize: '11px' } }
+    },
+    yaxis: [
+      {
+        title: { text: 'Ventas (CLP)', style: { color: '#10b981', fontSize: '11px' } },
+        labels: {
+          style: { colors: '#9ca3af' },
+          formatter: val => '$ ' + (val / 1000000).toFixed(0) + 'M'
+        }
+      },
+      {
+        opposite: true,
+        title: { text: 'Descuentos (CLP)', style: { color: '#ef4444', fontSize: '11px' } },
+        labels: {
+          style: { colors: '#9ca3af' },
+          formatter: val => '$ ' + (val / 1000000).toFixed(1) + 'M'
+        }
+      }
+    ],
+    grid: { borderColor: 'rgba(255, 255, 255, 0.06)', strokeDashArray: 4 },
+    tooltip: {
+      theme: 'dark',
+      y: { formatter: val => formatCLP(val) }
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      labels: { colors: '#9ca3af' }
+    }
+  };
+
+  if (chartMonthly) chartMonthly.destroy();
+  chartMonthly = new ApexCharts(document.querySelector("#chart-monthly-progression"), monthlyOptions);
+  chartMonthly.render();
+
+  // 3. HOURLY SALES TODAY
+  const hourlyData = charts.hourlyToday || [];
+  const hourlyOptions = {
+    series: [{
+      name: 'Ventas por Hora',
+      data: hourlyData.map(h => h.sales)
+    }],
+    chart: {
+      type: 'bar',
+      height: 280,
+      toolbar: { show: false },
+      background: 'transparent'
+    },
+    colors: ['#a855f7'],
+    plotOptions: {
+      bar: { borderRadius: 4, columnWidth: '60%' }
+    },
+    dataLabels: { enabled: false },
+    xaxis: {
+      categories: hourlyData.map(h => h.hour),
+      labels: { style: { colors: '#9ca3af', fontSize: '10px' } }
+    },
+    yaxis: {
+      labels: {
+        style: { colors: '#9ca3af' },
+        formatter: val => '$ ' + (val / 1000).toFixed(0) + 'K'
+      }
+    },
+    grid: { borderColor: 'rgba(255, 255, 255, 0.06)', strokeDashArray: 4 },
+    tooltip: {
+      theme: 'dark',
+      y: { formatter: val => formatCLP(val) }
+    }
+  };
+
+  if (chartHourly) chartHourly.destroy();
+  chartHourly = new ApexCharts(document.querySelector("#chart-hourly"), hourlyOptions);
+  chartHourly.render();
+}
+
+// Initial Boot
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.lucide) lucide.createIcons();
+  refreshDashboard();
+  
+  // Auto refresh every 60 seconds
+  setInterval(() => {
+    refreshDashboard(false);
+  }, 60000);
+});
