@@ -101,7 +101,7 @@ function updateStatusIndicators(data) {
   }
 }
 
-// Render Last 3 Months (Sales, Invoices, Salaries, Rent, Electricity)
+// Render Last 3 Months (Sales, Invoices, Salaries, Rent, Electricity, F29 SII)
 function renderLast3Months(last3Months) {
   if (!last3Months) return;
 
@@ -110,6 +110,7 @@ function renderLast3Months(last3Months) {
   const totalSalariesEl = document.getElementById('kpi-3m-salaries');
   const totalRentEl = document.getElementById('kpi-3m-rent');
   const totalElectricityEl = document.getElementById('kpi-3m-electricity');
+  const totalF29El = document.getElementById('kpi-3m-f29');
   const totalMarginEl = document.getElementById('kpi-3m-margin');
 
   if (totalSalesEl) totalSalesEl.textContent = formatCLP(last3Months.totalSales);
@@ -117,6 +118,7 @@ function renderLast3Months(last3Months) {
   if (totalSalariesEl) totalSalariesEl.textContent = formatCLP(last3Months.totalSalaries);
   if (totalRentEl) totalRentEl.textContent = formatCLP(last3Months.totalRent);
   if (totalElectricityEl) totalElectricityEl.textContent = formatCLP(last3Months.totalElectricity);
+  if (totalF29El) totalF29El.textContent = formatCLP(last3Months.totalF29Tax);
   if (totalMarginEl) totalMarginEl.textContent = formatCLP(last3Months.totalOperatingBalance);
 
   const months = last3Months.months || [];
@@ -131,6 +133,8 @@ function renderLast3Months(last3Months) {
     const rentRateEl = document.getElementById(`${prefix}-rent-rate`);
     const elecEl = document.getElementById(`${prefix}-electricity`);
     const elecRateEl = document.getElementById(`${prefix}-electricity-rate`);
+    const f29El = document.getElementById(`${prefix}-f29`);
+    const f29RateEl = document.getElementById(`${prefix}-f29-rate`);
     const expEl = document.getElementById(`${prefix}-expenses`);
     const balEl = document.getElementById(`${prefix}-balance`);
 
@@ -143,6 +147,8 @@ function renderLast3Months(last3Months) {
     if (rentRateEl) rentRateEl.textContent = `(${m.rentRate}%)`;
     if (elecEl) elecEl.textContent = formatCLP(m.electricity);
     if (elecRateEl) elecRateEl.textContent = `(${m.electricityRate}%)`;
+    if (f29El) f29El.textContent = formatCLP(m.f29Tax);
+    if (f29RateEl) f29RateEl.textContent = `(${m.f29TaxRate}%)`;
     if (expEl) expEl.textContent = formatCLP(m.totalExpenses);
     if (balEl) balEl.textContent = formatCLP(m.operatingBalance);
   });

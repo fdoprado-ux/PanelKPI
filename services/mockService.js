@@ -197,10 +197,12 @@ class MockService {
         salaries: 15591778,
         rent: 4711018,
         electricity: 2000000,
+        f29Tax: 0,
         invoicesRate: 38.7,
         salariesRate: 24.4,
         rentRate: 7.4,
         electricityRate: 3.1,
+        f29TaxRate: 0.0,
         totalExpenses: 47050565,
         operatingBalance: 16910701
       },
@@ -213,10 +215,12 @@ class MockService {
         salaries: 14289532,
         rent: 4699360,
         electricity: 2000000,
+        f29Tax: 0,
         invoicesRate: 40.8,
         salariesRate: 23.3,
         rentRate: 7.7,
         electricityRate: 3.3,
+        f29TaxRate: 0.0,
         totalExpenses: 46011516,
         operatingBalance: 15343768
       },
@@ -229,12 +233,14 @@ class MockService {
         salaries: 15413920,
         rent: 4697060,
         electricity: 2000000,
+        f29Tax: 7146837,
         invoicesRate: 40.5,
         salariesRate: 21.2,
         rentRate: 6.5,
         electricityRate: 2.7,
-        totalExpenses: 51568365,
-        operatingBalance: 21166197
+        f29TaxRate: 9.8,
+        totalExpenses: 58715202,
+        operatingBalance: 14019360
       }
     ];
 
@@ -245,8 +251,9 @@ class MockService {
       totalSalaries: 45295230,
       totalRent: 14107438,
       totalElectricity: 6000000,
-      totalExpenses: 144630446,
-      totalOperatingBalance: 53420666,
+      totalF29Tax: 7146837,
+      totalExpenses: 151777283,
+      totalOperatingBalance: 46273829,
       months: last3MonthsData
     };
 

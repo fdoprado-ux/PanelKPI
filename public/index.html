@@ -243,7 +243,7 @@
               Agosto - Octubre 2026
             </span>
           </div>
-          <p class="text-xs text-gray-400 mt-1">Consolidado de ventas brutas (Fudo POS) contrastadas con Facturas Recibidas y Monto de Arriendo</p>
+          <p class="text-xs text-gray-400 mt-1">Consolidado de ventas brutas (Fudo POS) contrastadas con Facturas Recibidas, Sueldos, Arriendo, Luz CGE y F29 SII</p>
         </div>
         <div class="text-xs text-gray-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
           <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-400"></i>
@@ -251,12 +251,12 @@
         </div>
       </div>
 
-      <!-- 6 SUMMARY CONSOLIDATED CARDS -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+      <!-- 7 SUMMARY CONSOLIDATED CARDS -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 mb-6">
         <!-- TOTAL VENTAS 3 MESES -->
         <div class="p-3.5 rounded-xl bg-white/5 border border-blue-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
-            <span class="text-[11px] font-semibold uppercase tracking-wider text-blue-300">Ventas 3 Meses</span>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-blue-300">Ventas 3M</span>
             <i data-lucide="trending-up" class="w-3.5 h-3.5 text-blue-400"></i>
           </div>
           <div id="kpi-3m-sales" class="text-lg lg:text-xl font-black text-white font-mono-numbers mt-1">$ 198.051.112</div>
@@ -270,7 +270,7 @@
             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-red-500/20 text-red-300 font-bold">40.0%</span>
           </div>
           <div id="kpi-3m-invoices" class="text-lg lg:text-xl font-black text-white font-mono-numbers mt-1">$ 79.227.778</div>
-          <p class="text-[10px] text-gray-400 mt-1">Insumos y prov.</p>
+          <p class="text-[10px] text-gray-400 mt-1">Insumos/prov.</p>
         </div>
 
         <!-- TOTAL SUELDOS LÍQUIDOS -->
@@ -280,7 +280,7 @@
             <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold">22.9%</span>
           </div>
           <div id="kpi-3m-salaries" class="text-lg lg:text-xl font-black text-white font-mono-numbers mt-1">$ 45.295.230</div>
-          <p class="text-[10px] text-gray-400 mt-1">Equipo restaurante</p>
+          <p class="text-[10px] text-gray-400 mt-1">Personal</p>
         </div>
 
         <!-- TOTAL ARRIENDO -->
@@ -303,13 +303,23 @@
           <p class="text-[10px] text-gray-400 mt-1">Fijo ($ 2.0M/m)</p>
         </div>
 
+        <!-- TOTAL F29 SII -->
+        <div class="p-3.5 rounded-xl bg-white/5 border border-rose-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-rose-300">F29 SII</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">3.6%</span>
+          </div>
+          <div id="kpi-3m-f29" class="text-lg lg:text-xl font-black text-white font-mono-numbers mt-1">$ 7.146.837</div>
+          <p class="text-[10px] text-gray-400 mt-1">Impuestos SII</p>
+        </div>
+
         <!-- MARGEN OPERATIVO RESULTANTE -->
         <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-emerald-300">Remanente</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">27.0%</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">23.4%</span>
           </div>
-          <div id="kpi-3m-margin" class="text-lg lg:text-xl font-black text-emerald-300 font-mono-numbers mt-1">$ 53.420.666</div>
+          <div id="kpi-3m-margin" class="text-lg lg:text-xl font-black text-emerald-300 font-mono-numbers mt-1">$ 46.273.829</div>
           <p class="text-[10px] text-emerald-400/80 mt-1">Libre de gastos</p>
         </div>
       </div>
@@ -357,6 +367,13 @@
               <div class="text-right">
                 <strong id="m10-electricity" class="text-white font-mono">$ 2.000.000</strong>
                 <span id="m10-electricity-rate" class="text-[10px] text-yellow-300 font-mono ml-1">(3.1%)</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-rose-500/10 border border-rose-500/20">
+              <span class="text-rose-300">F29 Sii:</span>
+              <div class="text-right">
+                <strong id="m10-f29" class="text-white font-mono">$ 0</strong>
+                <span id="m10-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(0.0%)</span>
               </div>
             </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
@@ -412,6 +429,13 @@
                 <span id="m9-electricity-rate" class="text-[10px] text-yellow-300 font-mono ml-1">(3.3%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-rose-500/10 border border-rose-500/20">
+              <span class="text-rose-300">F29 Sii:</span>
+              <div class="text-right">
+                <strong id="m9-f29" class="text-white font-mono">$ 0</strong>
+                <span id="m9-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(0.0%)</span>
+              </div>
+            </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
               <strong id="m9-expenses" class="text-gray-300 font-mono">$ 46.011.516</strong>
@@ -465,13 +489,20 @@
                 <span id="m8-electricity-rate" class="text-[10px] text-yellow-300 font-mono ml-1">(2.7%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-rose-500/10 border border-rose-500/20">
+              <span class="text-rose-300">F29 Sii:</span>
+              <div class="text-right">
+                <strong id="m8-f29" class="text-white font-mono">$ 7.146.837</strong>
+                <span id="m8-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(9.8%)</span>
+              </div>
+            </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 51.568.365</strong>
+              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 58.715.202</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 21.166.197</strong>
+              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 14.019.360</strong>
             </div>
           </div>
         </div>
