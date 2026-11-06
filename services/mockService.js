@@ -194,11 +194,13 @@ class MockService {
         monthName: 'Octubre',
         sales: 63961266,
         invoicesReceived: 24747769,
+        salaries: 15591778,
         rent: 4711018,
         invoicesRate: 38.7,
+        salariesRate: 24.4,
         rentRate: 7.4,
-        totalExpenses: 29458787,
-        operatingBalance: 34502479
+        totalExpenses: 45050565,
+        operatingBalance: 18910701
       },
       {
         year: 2026,
@@ -206,11 +208,13 @@ class MockService {
         monthName: 'Septiembre',
         sales: 61355284,
         invoicesReceived: 25022624,
+        salaries: 14289532,
         rent: 4699360,
         invoicesRate: 40.8,
+        salariesRate: 23.3,
         rentRate: 7.7,
-        totalExpenses: 29721984,
-        operatingBalance: 31633300
+        totalExpenses: 44011516,
+        operatingBalance: 17343768
       },
       {
         year: 2026,
@@ -218,11 +222,13 @@ class MockService {
         monthName: 'Agosto',
         sales: 72734562,
         invoicesReceived: 29457385,
+        salaries: 15413920,
         rent: 4697060,
         invoicesRate: 40.5,
+        salariesRate: 21.2,
         rentRate: 6.5,
-        totalExpenses: 34154445,
-        operatingBalance: 38580117
+        totalExpenses: 49568365,
+        operatingBalance: 23166197
       }
     ];
 
@@ -230,9 +236,10 @@ class MockService {
       period: 'Agosto - Octubre 2026',
       totalSales: 198051112,
       totalInvoices: 79227778,
+      totalSalaries: 45295230,
       totalRent: 14107438,
-      totalExpenses: 93335216,
-      totalOperatingBalance: 104715896,
+      totalExpenses: 138630446,
+      totalOperatingBalance: 59420666,
       months: last3MonthsData
     };
 

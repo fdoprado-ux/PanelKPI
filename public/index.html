@@ -251,16 +251,16 @@
         </div>
       </div>
 
-      <!-- 4 SUMMARY CONSOLIDATED CARDS -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- 5 SUMMARY CONSOLIDATED CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
         <!-- TOTAL VENTAS 3 MESES -->
         <div class="p-4 rounded-xl bg-white/5 border border-blue-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
-            <span class="text-xs font-semibold uppercase tracking-wider text-blue-300">Ventas 3 Meses (Fudo)</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-blue-300">Ventas 3 Meses</span>
             <i data-lucide="trending-up" class="w-4 h-4 text-blue-400"></i>
           </div>
-          <div id="kpi-3m-sales" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 198.051.112</div>
-          <p class="text-[11px] text-gray-400 mt-1.5">Promedio: <strong class="text-blue-300 font-mono">$ 66.017.037</strong> / mes</p>
+          <div id="kpi-3m-sales" class="text-xl lg:text-2xl font-black text-white font-mono-numbers mt-1">$ 198.051.112</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Prom: <strong class="text-blue-300 font-mono">$ 66.017.037</strong> / m</p>
         </div>
 
         <!-- TOTAL FACTURAS RECIBIDAS -->
@@ -269,28 +269,38 @@
             <span class="text-xs font-semibold uppercase tracking-wider text-red-300">Facturas Recibidas</span>
             <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-red-500/20 text-red-300 font-bold">40.0%</span>
           </div>
-          <div id="kpi-3m-invoices" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 79.227.778</div>
-          <p class="text-[11px] text-gray-400 mt-1.5">Compras y costos de insumos/proveedores</p>
+          <div id="kpi-3m-invoices" class="text-xl lg:text-2xl font-black text-white font-mono-numbers mt-1">$ 79.227.778</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Costos de insumos / prov.</p>
+        </div>
+
+        <!-- TOTAL SUELDOS LÍQUIDOS -->
+        <div class="p-4 rounded-xl bg-white/5 border border-purple-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Sueldos Líquidos</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold">22.9%</span>
+          </div>
+          <div id="kpi-3m-salaries" class="text-xl lg:text-2xl font-black text-white font-mono-numbers mt-1">$ 45.295.230</div>
+          <p class="text-[11px] text-gray-400 mt-1.5">Remuneraciones equipo</p>
         </div>
 
         <!-- TOTAL ARRIENDO -->
         <div class="p-4 rounded-xl bg-white/5 border border-amber-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
-            <span class="text-xs font-semibold uppercase tracking-wider text-amber-300">Arriendo Local (3 Meses)</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-300">Arriendo Local</span>
             <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">7.1%</span>
           </div>
-          <div id="kpi-3m-rent" class="text-2xl font-black text-white font-mono-numbers mt-1">$ 14.107.438</div>
+          <div id="kpi-3m-rent" class="text-xl lg:text-2xl font-black text-white font-mono-numbers mt-1">$ 14.107.438</div>
           <p class="text-[11px] text-gray-400 mt-1.5">Monto fijo mensual (~$ 4.7M)</p>
         </div>
 
         <!-- MARGEN OPERATIVO RESULTANTE -->
         <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
-            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Remanente Operativo</span>
-            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">52.9%</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">Remanente</span>
+            <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">30.0%</span>
           </div>
-          <div id="kpi-3m-margin" class="text-2xl font-black text-emerald-300 font-mono-numbers mt-1">$ 104.715.896</div>
-          <p class="text-[11px] text-emerald-400/80 mt-1.5">Venta libre de facturas y arriendo</p>
+          <div id="kpi-3m-margin" class="text-xl lg:text-2xl font-black text-emerald-300 font-mono-numbers mt-1">$ 59.420.666</div>
+          <p class="text-[11px] text-emerald-400/80 mt-1.5">Libre de gastos clave</p>
         </div>
       </div>
 
@@ -318,6 +328,13 @@
                 <span id="m10-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(38.7%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-purple-500/10 border border-purple-500/20">
+              <span class="text-purple-300">Sueldos Líquidos:</span>
+              <div class="text-right">
+                <strong id="m10-salaries" class="text-white font-mono">$ 15.591.778</strong>
+                <span id="m10-salaries-rate" class="text-[10px] text-purple-300 font-mono ml-1">(24.4%)</span>
+              </div>
+            </div>
             <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
               <span class="text-amber-300">Monto Arriendo:</span>
               <div class="text-right">
@@ -327,11 +344,11 @@
             </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m10-expenses" class="text-gray-300 font-mono">$ 29.458.787</strong>
+              <strong id="m10-expenses" class="text-gray-300 font-mono">$ 45.050.565</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m10-balance" class="text-emerald-400 font-mono font-bold">$ 34.502.479</strong>
+              <strong id="m10-balance" class="text-emerald-400 font-mono font-bold">$ 18.910.701</strong>
             </div>
           </div>
         </div>
@@ -357,6 +374,13 @@
                 <span id="m9-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(40.8%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-purple-500/10 border border-purple-500/20">
+              <span class="text-purple-300">Sueldos Líquidos:</span>
+              <div class="text-right">
+                <strong id="m9-salaries" class="text-white font-mono">$ 14.289.532</strong>
+                <span id="m9-salaries-rate" class="text-[10px] text-purple-300 font-mono ml-1">(23.3%)</span>
+              </div>
+            </div>
             <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
               <span class="text-amber-300">Monto Arriendo:</span>
               <div class="text-right">
@@ -366,11 +390,11 @@
             </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m9-expenses" class="text-gray-300 font-mono">$ 29.721.984</strong>
+              <strong id="m9-expenses" class="text-gray-300 font-mono">$ 44.011.516</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m9-balance" class="text-emerald-400 font-mono font-bold">$ 31.633.300</strong>
+              <strong id="m9-balance" class="text-emerald-400 font-mono font-bold">$ 17.343.768</strong>
             </div>
           </div>
         </div>
@@ -396,6 +420,13 @@
                 <span id="m8-invoices-rate" class="text-[10px] text-red-300 font-mono ml-1">(40.5%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-purple-500/10 border border-purple-500/20">
+              <span class="text-purple-300">Sueldos Líquidos:</span>
+              <div class="text-right">
+                <strong id="m8-salaries" class="text-white font-mono">$ 15.413.920</strong>
+                <span id="m8-salaries-rate" class="text-[10px] text-purple-300 font-mono ml-1">(21.2%)</span>
+              </div>
+            </div>
             <div class="flex items-center justify-between py-1 px-2 rounded bg-amber-500/10 border border-amber-500/20">
               <span class="text-amber-300">Monto Arriendo:</span>
               <div class="text-right">
@@ -405,11 +436,11 @@
             </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 34.154.445</strong>
+              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 49.568.365</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 38.580.117</strong>
+              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 23.166.197</strong>
             </div>
           </div>
         </div>

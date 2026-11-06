@@ -378,7 +378,7 @@ class FudoService {
       sales: todayRes.hourlyCounts[h] || 0
     }));
 
-    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with received invoices and rent
+    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, and rent
     const last3MonthsData = [
       {
         year: 2026,
@@ -386,11 +386,13 @@ class FudoService {
         monthName: 'Octubre',
         sales: monthRes.totalSales || 63961266,
         invoicesReceived: 24747769,
+        salaries: 15591778,
         rent: 4711018,
         invoicesRate: Number(((24747769 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
+        salariesRate: Number(((15591778 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
         rentRate: Number(((4711018 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        totalExpenses: 24747769 + 4711018,
-        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 4711018)
+        totalExpenses: 24747769 + 15591778 + 4711018,
+        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 15591778 + 4711018)
       },
       {
         year: 2026,
@@ -398,11 +400,13 @@ class FudoService {
         monthName: 'Septiembre',
         sales: 61355284,
         invoicesReceived: 25022624,
+        salaries: 14289532,
         rent: 4699360,
         invoicesRate: Number(((25022624 / 61355284) * 100).toFixed(1)),
+        salariesRate: Number(((14289532 / 61355284) * 100).toFixed(1)),
         rentRate: Number(((4699360 / 61355284) * 100).toFixed(1)),
-        totalExpenses: 25022624 + 4699360,
-        operatingBalance: 61355284 - (25022624 + 4699360)
+        totalExpenses: 25022624 + 14289532 + 4699360,
+        operatingBalance: 61355284 - (25022624 + 14289532 + 4699360)
       },
       {
         year: 2026,
@@ -410,11 +414,13 @@ class FudoService {
         monthName: 'Agosto',
         sales: 72734562,
         invoicesReceived: 29457385,
+        salaries: 15413920,
         rent: 4697060,
         invoicesRate: Number(((29457385 / 72734562) * 100).toFixed(1)),
+        salariesRate: Number(((15413920 / 72734562) * 100).toFixed(1)),
         rentRate: Number(((4697060 / 72734562) * 100).toFixed(1)),
-        totalExpenses: 29457385 + 4697060,
-        operatingBalance: 72734562 - (29457385 + 4697060)
+        totalExpenses: 29457385 + 15413920 + 4697060,
+        operatingBalance: 72734562 - (29457385 + 15413920 + 4697060)
       }
     ];
 
@@ -422,6 +428,7 @@ class FudoService {
       period: 'Agosto - Octubre 2026',
       totalSales: last3MonthsData.reduce((acc, m) => acc + m.sales, 0),
       totalInvoices: last3MonthsData.reduce((acc, m) => acc + m.invoicesReceived, 0),
+      totalSalaries: last3MonthsData.reduce((acc, m) => acc + m.salaries, 0),
       totalRent: last3MonthsData.reduce((acc, m) => acc + m.rent, 0),
       totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
       totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
