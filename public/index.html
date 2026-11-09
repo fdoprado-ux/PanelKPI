@@ -69,9 +69,17 @@
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-2.5 self-end md:self-center shrink-0">
-          <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300 font-mono-numbers flex items-center gap-1.5">
+          <div class="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30 text-xs text-blue-300 font-mono-numbers flex items-center gap-1.5" title="Auto-refresco automático programado cada 30 minutos">
+            <i data-lucide="timer" class="w-3.5 h-3.5 text-blue-400"></i>
+            <span>Auto-refresco: <strong id="autorefresh-countdown" class="text-white">30:00</strong></span>
+          </div>
+          <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300 font-mono-numbers flex items-center gap-1.5" title="Hora local oficial en Santiago de Chile">
             <i data-lucide="clock" class="w-3.5 h-3.5 text-gray-400"></i>
             <span id="clock-display">--:--:--</span>
+          </div>
+          <div id="last-updated-pill" class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-gray-300 font-mono-numbers flex items-center gap-1.5" title="Hora de la última sincronización">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="last-updated-display">Actualizado: --:--:--</span>
           </div>
           <button id="btn-refresh" onclick="refreshDashboard(true)" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 text-xs font-medium transition-all flex items-center gap-1.5">
             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>

@@ -48,10 +48,44 @@ function closePermissionsModal() {
   }
 }
 
+// Auto-refresh configuration (30 minutes)
+const AUTO_REFRESH_INTERVAL_MS = 30 * 60 * 1000;
+let nextRefreshTimestamp = Date.now() + AUTO_REFRESH_INTERVAL_MS;
+let isRefreshing = false;
+
+function updateAutoRefreshCountdown() {
+  const countdownEl = document.getElementById('autorefresh-countdown');
+  if (!countdownEl) return;
+
+  if (isRefreshing) {
+    countdownEl.textContent = 'Sincronizando...';
+    return;
+  }
+
+  const now = Date.now();
+  const diffMs = nextRefreshTimestamp - now;
+
+  if (diffMs <= 0) {
+    countdownEl.textContent = 'Actualizando...';
+    refreshDashboard(true);
+    return;
+  }
+
+  const totalSec = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(totalSec / 60);
+  const seconds = totalSec % 60;
+  countdownEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
 // Main Dashboard Data Loader
 async function refreshDashboard(force = false) {
+  if (isRefreshing) return;
+  isRefreshing = true;
+
   const refreshBtn = document.getElementById('btn-refresh');
+  const refreshIcon = refreshBtn ? refreshBtn.querySelector('[data-lucide="refresh-cw"]') : null;
   if (refreshBtn) refreshBtn.classList.add('opacity-70', 'pointer-events-none');
+  if (refreshIcon) refreshIcon.classList.add('animate-spin');
 
   try {
     const res = await fetch(`/api/metrics${force ? '?force=true' : ''}`);
@@ -67,11 +101,25 @@ async function refreshDashboard(force = false) {
     renderTopBarTable(data.charts?.topBar || []);
     renderCharts(data.charts, data.metrics);
 
+    // Update last sync timestamp in Chile timezone
+    const lastUpdatedEl = document.getElementById('last-updated-display');
+    if (lastUpdatedEl) {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('es-CL', { timeZone: 'America/Santiago', hour12: false });
+      lastUpdatedEl.textContent = `Actualizado: ${timeStr}`;
+    }
+
+    // Reset next 30-minute auto-refresh cycle
+    nextRefreshTimestamp = Date.now() + AUTO_REFRESH_INTERVAL_MS;
+
   } catch (err) {
     console.error('Error fetching metrics:', err);
   } finally {
+    isRefreshing = false;
     if (refreshBtn) refreshBtn.classList.remove('opacity-70', 'pointer-events-none');
+    if (refreshIcon) refreshIcon.classList.remove('animate-spin');
     if (window.lucide) lucide.createIcons();
+    updateAutoRefreshCountdown();
   }
 }
 
@@ -494,10 +542,20 @@ function renderCharts(charts, metrics) {
 // Initial Boot
 document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) lucide.createIcons();
-  refreshDashboard();
   
-  // Auto refresh every 60 seconds
-  setInterval(() => {
-    refreshDashboard(false);
-  }, 60000);
+  // Initial load
+  refreshDashboard();
+
+  // Tick the countdown timer every second (triggers refresh at 00:00 every 30 minutes)
+  setInterval(updateAutoRefreshCountdown, 1000);
+  updateAutoRefreshCountdown();
+
+  // Document visibility listener: if user comes back to the tab after 30+ minutes, refresh immediately
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      if (Date.now() >= nextRefreshTimestamp) {
+        refreshDashboard(true);
+      }
+    }
+  });
 });

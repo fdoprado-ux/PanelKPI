@@ -71,6 +71,13 @@ apiRouter.post('/check-permissions', async (req, res) => {
  * Main Metrics Endpoint
  */
 apiRouter.get('/metrics', async (req, res) => {
+  // Prevent browser/proxy intermediate caching for real-time freshness
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0'
+  });
+
   const force = req.query.force === 'true';
   const now = Date.now();
 

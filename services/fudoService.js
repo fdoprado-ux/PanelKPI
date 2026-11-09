@@ -285,17 +285,54 @@ class FudoService {
   async getLiveMetrics() {
     const diagnostic = await this.checkPermissions();
 
-    // 1. Today (Nov 5 03:00Z to now, covering current Chilean shift)
-    const todayRes = await this.querySalesPeriod('2026-11-05T03:00:00Z', '2026-11-06T04:30:00Z', true);
+    // Dynamic Chilean & UTC Timestamps (No milliseconds, as required by Fudo API regex)
+    const now = new Date();
+    const nowIso = now.toISOString().split('.')[0] + 'Z';
 
-    // 2. Last 7 Days (Oct 30 03:00Z to now)
-    const weekRes = await this.querySalesPeriod('2026-10-30T03:00:00Z', '2026-11-06T04:30:00Z', true);
+    // Chilean shift calculation:
+    // Chile timezone: America/Santiago (UTC-3 summer)
+    const chileFormatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Santiago',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    const [chileDateStr, chileTimeStr] = chileFormatter.format(now).split(', ');
+    const [cYear, cMonth, cDay] = chileDateStr.split('-').map(Number);
+    const [cHour] = chileTimeStr.split(':').map(Number);
 
-    // 3. Last Month (Full October 2026)
-    const monthRes = await this.querySalesPeriod('2026-10-01T03:00:00Z', '2026-11-01T03:00:00Z', true);
+    // If local Chilean hour < 5 AM, the restaurant shift belongs to the previous calendar day
+    const shiftDate = new Date(Date.UTC(cYear, cMonth - 1, cDay));
+    if (cHour < 5) {
+      shiftDate.setUTCDate(shiftDate.getUTCDate() - 1);
+    }
+    const sYear = shiftDate.getUTCFullYear();
+    const sMonth = String(shiftDate.getUTCMonth() + 1).padStart(2, '0');
+    const sDay = String(shiftDate.getUTCDate()).padStart(2, '0');
 
-    // 4. Current Month MTD (November 1 - 6)
-    const mtdRes = await this.querySalesPeriod('2026-11-01T03:00:00Z', '2026-11-06T04:30:00Z', true);
+    // 1. Today (Current Chilean shift from 00:00 Chile / 03:00Z to now)
+    const todayStartIso = `${sYear}-${sMonth}-${sDay}T03:00:00Z`;
+    const todayRes = await this.querySalesPeriod(todayStartIso, nowIso, true);
+
+    // 2. Last 7 Days (7 * 24h prior to now)
+    const weekStartDate = new Date(now.getTime() - 7 * 24 * 3600 * 1000);
+    const weekStartIso = weekStartDate.toISOString().split('.')[0] + 'Z';
+    const weekRes = await this.querySalesPeriod(weekStartIso, nowIso, true);
+
+    // 3. Current Month MTD (from 1st of current month at 03:00Z to now)
+    const mtdStartIso = `${sYear}-${sMonth}-01T03:00:00Z`;
+    const mtdRes = await this.querySalesPeriod(mtdStartIso, nowIso, true);
+
+    // 4. Last Closed Month (Full previous month: e.g. Oct 1 to Nov 1)
+    const prevMonthNum = Number(sMonth) === 1 ? 12 : Number(sMonth) - 1;
+    const prevMonthYear = Number(sMonth) === 1 ? sYear - 1 : sYear;
+    const prevMonthStartIso = `${prevMonthYear}-${String(prevMonthNum).padStart(2, '0')}-01T03:00:00Z`;
+    const prevMonthEndIso = `${sYear}-${sMonth}-01T03:00:00Z`;
+    const monthRes = await this.querySalesPeriod(prevMonthStartIso, prevMonthEndIso, true);
 
     // 5. Build Year 2026 consolidation
     const monthlyProgression = [];
