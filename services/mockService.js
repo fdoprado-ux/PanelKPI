@@ -187,6 +187,18 @@ class MockService {
       { hour: '02:00', sales: 152159 }
     ];
 
+    const weeklyFixedCosts = {
+      items: [
+        { name: 'DJ Lunes', day: 'Lunes', amount: 80000, monthlyEstimate: 320000 },
+        { name: 'DJ Martes', day: 'Martes', amount: 80000, monthlyEstimate: 320000 },
+        { name: 'DJ Miércoles Terraza y Karaoke', day: 'Miércoles', amount: 160000, monthlyEstimate: 640000 },
+        { name: 'DJ Jueves', day: 'Jueves', amount: 150000, monthlyEstimate: 600000 }
+      ],
+      totalWeekly: 470000,
+      totalMonthlyEstimate: 1880000
+    };
+
+    const monthlyDjCost = 1880000;
     const last3MonthsData = [
       {
         year: 2026,
@@ -198,13 +210,15 @@ class MockService {
         rent: 4711018,
         electricity: 2000000,
         f29Tax: 0,
+        djCost: monthlyDjCost,
         invoicesRate: 38.7,
         salariesRate: 24.4,
         rentRate: 7.4,
         electricityRate: 3.1,
         f29TaxRate: 0.0,
-        totalExpenses: 47050565,
-        operatingBalance: 16910701
+        djCostRate: 2.9,
+        totalExpenses: 48930565,
+        operatingBalance: 15030701
       },
       {
         year: 2026,
@@ -216,13 +230,15 @@ class MockService {
         rent: 4699360,
         electricity: 2000000,
         f29Tax: 0,
+        djCost: monthlyDjCost,
         invoicesRate: 40.8,
         salariesRate: 23.3,
         rentRate: 7.7,
         electricityRate: 3.3,
         f29TaxRate: 0.0,
-        totalExpenses: 46011516,
-        operatingBalance: 15343768
+        djCostRate: 3.1,
+        totalExpenses: 47891516,
+        operatingBalance: 13463768
       },
       {
         year: 2026,
@@ -234,13 +250,15 @@ class MockService {
         rent: 4697060,
         electricity: 2000000,
         f29Tax: 7146837,
+        djCost: monthlyDjCost,
         invoicesRate: 40.5,
         salariesRate: 21.2,
         rentRate: 6.5,
         electricityRate: 2.7,
         f29TaxRate: 9.8,
-        totalExpenses: 58715202,
-        operatingBalance: 14019360
+        djCostRate: 2.6,
+        totalExpenses: 60595202,
+        operatingBalance: 12139360
       }
     ];
 
@@ -252,8 +270,9 @@ class MockService {
       totalRent: 14107438,
       totalElectricity: 6000000,
       totalF29Tax: 7146837,
-      totalExpenses: 151777283,
-      totalOperatingBalance: 46273829,
+      totalDjCost: 5640000,
+      totalExpenses: 157417283,
+      totalOperatingBalance: 40633829,
       months: last3MonthsData
     };
 
@@ -318,6 +337,7 @@ class MockService {
           },
           breakdown: discountBreakdown
         },
+        weeklyFixedCosts,
         last3Months
       },
       charts: {

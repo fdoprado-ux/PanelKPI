@@ -415,25 +415,40 @@ class FudoService {
       sales: todayRes.hourlyCounts[h] || 0
     }));
 
-    // 8. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, rent, Luz CGE, and F29 SII
+    // 8. Costos Fijos Semanales (DJs y Entretenimiento)
+    const weeklyFixedCosts = {
+      items: [
+        { name: 'DJ Lunes', day: 'Lunes', amount: 80000, monthlyEstimate: 320000 },
+        { name: 'DJ Martes', day: 'Martes', amount: 80000, monthlyEstimate: 320000 },
+        { name: 'DJ Miércoles Terraza y Karaoke', day: 'Miércoles', amount: 160000, monthlyEstimate: 640000 },
+        { name: 'DJ Jueves', day: 'Jueves', amount: 150000, monthlyEstimate: 600000 }
+      ],
+      totalWeekly: 470000,
+      totalMonthlyEstimate: 1880000
+    };
+
+    // 9. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, rent, Luz CGE, F29 SII, and DJs
+    const monthlyDjCost = 1880000; // 4 semanas x $470.000
     const last3MonthsData = [
       {
         year: 2026,
         month: 10,
         monthName: 'Octubre',
-        sales: monthRes.totalSales || 63961266,
+        sales: monthRes.totalSales || 63904812,
         invoicesReceived: 24747769,
         salaries: 15591778,
         rent: 4711018,
         electricity: 2000000,
         f29Tax: 0,
-        invoicesRate: Number(((24747769 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        salariesRate: Number(((15591778 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        rentRate: Number(((4711018 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        electricityRate: Number(((2000000 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        f29TaxRate: Number(((0 / (monthRes.totalSales || 63961266)) * 100).toFixed(1)),
-        totalExpenses: 24747769 + 15591778 + 4711018 + 2000000 + 0,
-        operatingBalance: (monthRes.totalSales || 63961266) - (24747769 + 15591778 + 4711018 + 2000000 + 0)
+        djCost: monthlyDjCost,
+        invoicesRate: Number(((24747769 / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        salariesRate: Number(((15591778 / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        rentRate: Number(((4711018 / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        electricityRate: Number(((2000000 / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        f29TaxRate: Number(((0 / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        djCostRate: Number(((monthlyDjCost / (monthRes.totalSales || 63904812)) * 100).toFixed(1)),
+        totalExpenses: 24747769 + 15591778 + 4711018 + 2000000 + 0 + monthlyDjCost,
+        operatingBalance: (monthRes.totalSales || 63904812) - (24747769 + 15591778 + 4711018 + 2000000 + 0 + monthlyDjCost)
       },
       {
         year: 2026,
@@ -445,13 +460,15 @@ class FudoService {
         rent: 4699360,
         electricity: 2000000,
         f29Tax: 0,
+        djCost: monthlyDjCost,
         invoicesRate: Number(((25022624 / 61355284) * 100).toFixed(1)),
         salariesRate: Number(((14289532 / 61355284) * 100).toFixed(1)),
         rentRate: Number(((4699360 / 61355284) * 100).toFixed(1)),
         electricityRate: Number(((2000000 / 61355284) * 100).toFixed(1)),
         f29TaxRate: 0.0,
-        totalExpenses: 25022624 + 14289532 + 4699360 + 2000000 + 0,
-        operatingBalance: 61355284 - (25022624 + 14289532 + 4699360 + 2000000 + 0)
+        djCostRate: Number(((monthlyDjCost / 61355284) * 100).toFixed(1)),
+        totalExpenses: 25022624 + 14289532 + 4699360 + 2000000 + 0 + monthlyDjCost,
+        operatingBalance: 61355284 - (25022624 + 14289532 + 4699360 + 2000000 + 0 + monthlyDjCost)
       },
       {
         year: 2026,
@@ -463,13 +480,15 @@ class FudoService {
         rent: 4697060,
         electricity: 2000000,
         f29Tax: 7146837,
+        djCost: monthlyDjCost,
         invoicesRate: Number(((29457385 / 72734562) * 100).toFixed(1)),
         salariesRate: Number(((15413920 / 72734562) * 100).toFixed(1)),
         rentRate: Number(((4697060 / 72734562) * 100).toFixed(1)),
         electricityRate: Number(((2000000 / 72734562) * 100).toFixed(1)),
         f29TaxRate: Number(((7146837 / 72734562) * 100).toFixed(1)),
-        totalExpenses: 29457385 + 15413920 + 4697060 + 2000000 + 7146837,
-        operatingBalance: 72734562 - (29457385 + 15413920 + 4697060 + 2000000 + 7146837)
+        djCostRate: Number(((monthlyDjCost / 72734562) * 100).toFixed(1)),
+        totalExpenses: 29457385 + 15413920 + 4697060 + 2000000 + 7146837 + monthlyDjCost,
+        operatingBalance: 72734562 - (29457385 + 15413920 + 4697060 + 2000000 + 7146837 + monthlyDjCost)
       }
     ];
 
@@ -481,6 +500,7 @@ class FudoService {
       totalRent: last3MonthsData.reduce((acc, m) => acc + m.rent, 0),
       totalElectricity: last3MonthsData.reduce((acc, m) => acc + m.electricity, 0),
       totalF29Tax: last3MonthsData.reduce((acc, m) => acc + m.f29Tax, 0),
+      totalDjCost: last3MonthsData.reduce((acc, m) => acc + m.djCost, 0),
       totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
       totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
       months: last3MonthsData
@@ -562,6 +582,7 @@ class FudoService {
         },
         cashWithdrawals,
         cashSales,
+        weeklyFixedCosts,
         last3Months
       },
       charts: {

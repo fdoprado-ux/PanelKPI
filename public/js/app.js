@@ -93,6 +93,7 @@ async function refreshDashboard(force = false) {
 
     updateStatusIndicators(data);
     renderMetrics(data.metrics);
+    renderWeeklyFixedCosts(data.metrics?.weeklyFixedCosts, data.metrics?.week?.sales);
     renderLast3Months(data.metrics?.last3Months);
     renderCashSales(data.metrics?.cashSales);
     renderCashWithdrawals(data.metrics?.cashWithdrawals);
@@ -149,7 +150,37 @@ function updateStatusIndicators(data) {
   }
 }
 
-// Render Last 3 Months (Sales, Invoices, Salaries, Rent, Electricity, F29 SII)
+// Render Costos Fijos Semanales (DJs y Entretenimiento)
+function renderWeeklyFixedCosts(costs, weekSales) {
+  const totalWeeklyEl = document.getElementById('dj-cost-total-weekly');
+  const totalMonthlyEl = document.getElementById('dj-cost-total-monthly');
+  const ratioEl = document.getElementById('dj-cost-week-ratio');
+  const djMondayEl = document.getElementById('dj-cost-lunes');
+  const djTuesdayEl = document.getElementById('dj-cost-martes');
+  const djWednesdayEl = document.getElementById('dj-cost-miercoles');
+  const djThursdayEl = document.getElementById('dj-cost-jueves');
+
+  const totalWeekly = costs?.totalWeekly || 470000;
+  const totalMonthly = costs?.totalMonthlyEstimate || 1880000;
+
+  if (totalWeeklyEl) totalWeeklyEl.textContent = formatCLP(totalWeekly);
+  if (totalMonthlyEl) totalMonthlyEl.textContent = formatCLP(totalMonthly);
+  if (djMondayEl) djMondayEl.textContent = formatCLP(80000);
+  if (djTuesdayEl) djTuesdayEl.textContent = formatCLP(80000);
+  if (djWednesdayEl) djWednesdayEl.textContent = formatCLP(160000);
+  if (djThursdayEl) djThursdayEl.textContent = formatCLP(150000);
+
+  if (ratioEl) {
+    if (weekSales > 0) {
+      const pct = ((totalWeekly / weekSales) * 100).toFixed(1);
+      ratioEl.textContent = `${pct}% de ventas`;
+    } else {
+      ratioEl.textContent = `Fijo semanal`;
+    }
+  }
+}
+
+// Render Last 3 Months (Sales, Invoices, Salaries, Rent, Electricity, F29 SII, DJs)
 function renderLast3Months(last3Months) {
   if (!last3Months) return;
 
@@ -159,6 +190,7 @@ function renderLast3Months(last3Months) {
   const totalRentEl = document.getElementById('kpi-3m-rent');
   const totalElectricityEl = document.getElementById('kpi-3m-electricity');
   const totalF29El = document.getElementById('kpi-3m-f29');
+  const totalDjEl = document.getElementById('kpi-3m-dj');
   const totalMarginEl = document.getElementById('kpi-3m-margin');
 
   if (totalSalesEl) totalSalesEl.textContent = formatCLP(last3Months.totalSales);
@@ -167,6 +199,7 @@ function renderLast3Months(last3Months) {
   if (totalRentEl) totalRentEl.textContent = formatCLP(last3Months.totalRent);
   if (totalElectricityEl) totalElectricityEl.textContent = formatCLP(last3Months.totalElectricity);
   if (totalF29El) totalF29El.textContent = formatCLP(last3Months.totalF29Tax);
+  if (totalDjEl) totalDjEl.textContent = formatCLP(last3Months.totalDjCost || 5640000);
   if (totalMarginEl) totalMarginEl.textContent = formatCLP(last3Months.totalOperatingBalance);
 
   const months = last3Months.months || [];
@@ -183,6 +216,8 @@ function renderLast3Months(last3Months) {
     const elecRateEl = document.getElementById(`${prefix}-electricity-rate`);
     const f29El = document.getElementById(`${prefix}-f29`);
     const f29RateEl = document.getElementById(`${prefix}-f29-rate`);
+    const djEl = document.getElementById(`${prefix}-dj`);
+    const djRateEl = document.getElementById(`${prefix}-dj-rate`);
     const expEl = document.getElementById(`${prefix}-expenses`);
     const balEl = document.getElementById(`${prefix}-balance`);
 
@@ -197,6 +232,8 @@ function renderLast3Months(last3Months) {
     if (elecRateEl) elecRateEl.textContent = `(${m.electricityRate}%)`;
     if (f29El) f29El.textContent = formatCLP(m.f29Tax);
     if (f29RateEl) f29RateEl.textContent = `(${m.f29TaxRate}%)`;
+    if (djEl) djEl.textContent = formatCLP(m.djCost || 1880000);
+    if (djRateEl) djRateEl.textContent = `(${m.djCostRate || 2.9}%)`;
     if (expEl) expEl.textContent = formatCLP(m.totalExpenses);
     if (balEl) balEl.textContent = formatCLP(m.operatingBalance);
   });

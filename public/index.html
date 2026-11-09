@@ -237,6 +237,105 @@
     </div>
 
     <!-- ======================================================== -->
+    <!-- SECCIÓN: COSTOS FIJOS SEMANALES (DJS & ANIMACIÓN)        -->
+    <!-- ======================================================== -->
+    <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-indigo-500/20 bg-gradient-to-br from-dark-800 via-dark-800 to-indigo-950/20">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="music" class="w-5 h-5 text-indigo-400"></i>
+              Costos Fijos Semanales: DJs & Animación
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              Gasto Fijo Semanal
+            </span>
+          </div>
+          <p class="text-xs text-gray-400 mt-1">Presupuesto recurrente semanal asignado para musicalización y animación en Steakout</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/10">
+          <div>
+            <span class="text-[10px] text-gray-400 uppercase tracking-wider block">Total Semanal Fijo</span>
+            <div id="dj-cost-total-weekly" class="text-lg font-black text-indigo-300 font-mono-numbers">$ 470.000</div>
+          </div>
+          <div class="h-8 w-px bg-white/10 mx-1"></div>
+          <div>
+            <span class="text-[10px] text-gray-400 uppercase tracking-wider block">Proy. Mensual (4 sem)</span>
+            <div id="dj-cost-total-monthly" class="text-lg font-black text-white font-mono-numbers">$ 1.880.000</div>
+          </div>
+          <div class="h-8 w-px bg-white/10 mx-1"></div>
+          <div>
+            <span class="text-[10px] text-gray-400 uppercase tracking-wider block">Ratio s/ Venta Semanal</span>
+            <div id="dj-cost-week-ratio" class="text-xs font-bold text-indigo-300 font-mono">3.2% de ventas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 DÍAS CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <!-- LUNES -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 hover:border-indigo-500/40 transition-colors">
+          <div class="flex items-center justify-between text-gray-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+              <i data-lucide="disc" class="w-3.5 h-3.5 text-indigo-400"></i> DJ Lunes
+            </span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 font-bold">Semanal</span>
+          </div>
+          <div id="dj-cost-lunes" class="text-xl font-bold text-white font-mono-numbers">$ 80.000</div>
+          <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
+            <span>Día de turno</span>
+            <span class="text-gray-300 font-mono">~$ 320.000 /mes</span>
+          </div>
+        </div>
+
+        <!-- MARTES -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 hover:border-indigo-500/40 transition-colors">
+          <div class="flex items-center justify-between text-gray-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+              <i data-lucide="disc" class="w-3.5 h-3.5 text-indigo-400"></i> DJ Martes
+            </span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 font-bold">Semanal</span>
+          </div>
+          <div id="dj-cost-martes" class="text-xl font-bold text-white font-mono-numbers">$ 80.000</div>
+          <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
+            <span>Día de turno</span>
+            <span class="text-gray-300 font-mono">~$ 320.000 /mes</span>
+          </div>
+        </div>
+
+        <!-- MIÉRCOLES -->
+        <div class="p-4 rounded-xl bg-black/30 border border-purple-500/30 hover:border-purple-500/50 transition-colors bg-purple-950/10">
+          <div class="flex items-center justify-between text-gray-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
+              <i data-lucide="mic" class="w-3.5 h-3.5 text-purple-400"></i> DJ Miércoles
+            </span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-bold">Semanal</span>
+          </div>
+          <div id="dj-cost-miercoles" class="text-xl font-bold text-white font-mono-numbers">$ 160.000</div>
+          <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
+            <span class="text-purple-300">Terraza & Karaoke</span>
+            <span class="text-gray-300 font-mono">~$ 640.000 /mes</span>
+          </div>
+        </div>
+
+        <!-- JUEVES -->
+        <div class="p-4 rounded-xl bg-black/30 border border-white/10 hover:border-amber-500/40 transition-colors">
+          <div class="flex items-center justify-between text-gray-400 mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+              <i data-lucide="headphones" class="w-3.5 h-3.5 text-amber-400"></i> DJ Jueves
+            </span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 font-bold">Semanal</span>
+          </div>
+          <div id="dj-cost-jueves" class="text-xl font-bold text-white font-mono-numbers">$ 150.000</div>
+          <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
+            <span>Día de turno</span>
+            <span class="text-gray-300 font-mono">~$ 600.000 /mes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
     <!-- SECCIÓN: VENTAS Y GASTOS CLAVE ÚLTIMOS 3 MESES           -->
     <!-- ======================================================== -->
     <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-blue-500/20 bg-gradient-to-br from-dark-800 via-dark-800 to-blue-950/20">
@@ -251,7 +350,7 @@
               Agosto - Octubre 2026
             </span>
           </div>
-          <p class="text-xs text-gray-400 mt-1">Consolidado de ventas brutas (Fudo POS) contrastadas con Facturas Recibidas, Sueldos, Arriendo, Luz CGE y F29 SII</p>
+          <p class="text-xs text-gray-400 mt-1">Consolidado de ventas brutas (Fudo POS) contrastadas con Facturas Recibidas, Sueldos, Arriendo, Luz CGE, F29 SII y DJs Semanales</p>
         </div>
         <div class="text-xs text-gray-400 bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
           <i data-lucide="calculator" class="w-3.5 h-3.5 text-blue-400"></i>
@@ -259,8 +358,8 @@
         </div>
       </div>
 
-      <!-- 7 SUMMARY CONSOLIDATED CARDS -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 mb-6">
+      <!-- 8 SUMMARY CONSOLIDATED CARDS -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8 gap-3 mb-6">
         <!-- TOTAL VENTAS 3 MESES -->
         <div class="p-3.5 rounded-xl bg-white/5 border border-blue-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
@@ -321,13 +420,23 @@
           <p class="text-[10px] text-gray-400 mt-1">Impuestos SII</p>
         </div>
 
+        <!-- TOTAL DJS SEMANALES -->
+        <div class="p-3.5 rounded-xl bg-white/5 border border-indigo-500/30 relative overflow-hidden">
+          <div class="flex items-center justify-between text-gray-400 mb-1">
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-indigo-300">DJs Fijos</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-bold">2.9%</span>
+          </div>
+          <div id="kpi-3m-dj" class="text-lg lg:text-xl font-black text-white font-mono-numbers mt-1">$ 5.640.000</div>
+          <p class="text-[10px] text-gray-400 mt-1">Fijo ($ 1.88M/m)</p>
+        </div>
+
         <!-- MARGEN OPERATIVO RESULTANTE -->
         <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 relative overflow-hidden">
           <div class="flex items-center justify-between text-gray-400 mb-1">
             <span class="text-[11px] font-semibold uppercase tracking-wider text-emerald-300">Remanente</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">23.4%</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">20.5%</span>
           </div>
-          <div id="kpi-3m-margin" class="text-lg lg:text-xl font-black text-emerald-300 font-mono-numbers mt-1">$ 46.273.829</div>
+          <div id="kpi-3m-margin" class="text-lg lg:text-xl font-black text-emerald-300 font-mono-numbers mt-1">$ 40.633.829</div>
           <p class="text-[10px] text-emerald-400/80 mt-1">Libre de gastos</p>
         </div>
       </div>
@@ -384,13 +493,20 @@
                 <span id="m10-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(0.0%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-indigo-500/10 border border-indigo-500/20">
+              <span class="text-indigo-300">DJs Semanales (Fijo):</span>
+              <div class="text-right">
+                <strong id="m10-dj" class="text-white font-mono">$ 1.880.000</strong>
+                <span id="m10-dj-rate" class="text-[10px] text-indigo-300 font-mono ml-1">(2.9%)</span>
+              </div>
+            </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m10-expenses" class="text-gray-300 font-mono">$ 47.050.565</strong>
+              <strong id="m10-expenses" class="text-gray-300 font-mono">$ 48.930.565</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m10-balance" class="text-emerald-400 font-mono font-bold">$ 16.910.701</strong>
+              <strong id="m10-balance" class="text-emerald-400 font-mono font-bold">$ 15.030.701</strong>
             </div>
           </div>
         </div>
@@ -444,13 +560,20 @@
                 <span id="m9-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(0.0%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-indigo-500/10 border border-indigo-500/20">
+              <span class="text-indigo-300">DJs Semanales (Fijo):</span>
+              <div class="text-right">
+                <strong id="m9-dj" class="text-white font-mono">$ 1.880.000</strong>
+                <span id="m9-dj-rate" class="text-[10px] text-indigo-300 font-mono ml-1">(3.1%)</span>
+              </div>
+            </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m9-expenses" class="text-gray-300 font-mono">$ 46.011.516</strong>
+              <strong id="m9-expenses" class="text-gray-300 font-mono">$ 47.891.516</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m9-balance" class="text-emerald-400 font-mono font-bold">$ 15.343.768</strong>
+              <strong id="m9-balance" class="text-emerald-400 font-mono font-bold">$ 13.463.768</strong>
             </div>
           </div>
         </div>
@@ -504,13 +627,20 @@
                 <span id="m8-f29-rate" class="text-[10px] text-rose-300 font-mono ml-1">(9.8%)</span>
               </div>
             </div>
+            <div class="flex items-center justify-between py-1 px-2 rounded bg-indigo-500/10 border border-indigo-500/20">
+              <span class="text-indigo-300">DJs Semanales (Fijo):</span>
+              <div class="text-right">
+                <strong id="m8-dj" class="text-white font-mono">$ 1.880.000</strong>
+                <span id="m8-dj-rate" class="text-[10px] text-indigo-300 font-mono ml-1">(2.6%)</span>
+              </div>
+            </div>
             <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
               <span class="text-gray-400">Egresos Clave:</span>
-              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 58.715.202</strong>
+              <strong id="m8-expenses" class="text-gray-300 font-mono">$ 60.595.202</strong>
             </div>
             <div class="flex items-center justify-between text-[11px]">
               <span class="text-emerald-400 font-medium">Remanente Operativo:</span>
-              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 14.019.360</strong>
+              <strong id="m8-balance" class="text-emerald-400 font-mono font-bold">$ 12.139.360</strong>
             </div>
           </div>
         </div>
