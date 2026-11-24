@@ -224,8 +224,11 @@ function renderLast3Months(last3Months) {
     if (salesEl) salesEl.textContent = formatCLP(m.sales);
     if (invEl) invEl.textContent = formatCLP(m.invoicesReceived);
     if (invRateEl) invRateEl.textContent = `(${m.invoicesRate}%)`;
-    if (salEl) salEl.textContent = formatCLP(m.salaries);
-    if (salRateEl) salRateEl.textContent = `(${m.salariesRate}%)`;
+    if (salEl) {
+      salEl.textContent = m.isCurrentMonth ? 'Pend. Cierre' : formatCLP(m.salaries);
+      if (m.isCurrentMonth) salEl.className = 'text-gray-400 font-mono text-[11px]';
+    }
+    if (salRateEl) salRateEl.textContent = m.isCurrentMonth ? '(--%)' : `(${m.salariesRate}%)`;
     if (rentEl) rentEl.textContent = formatCLP(m.rent);
     if (rentRateEl) rentRateEl.textContent = `(${m.rentRate}%)`;
     if (elecEl) elecEl.textContent = formatCLP(m.electricity);
@@ -235,7 +238,15 @@ function renderLast3Months(last3Months) {
     if (djEl) djEl.textContent = formatCLP(m.djCost || 1880000);
     if (djRateEl) djRateEl.textContent = `(${m.djCostRate || 2.9}%)`;
     if (expEl) expEl.textContent = formatCLP(m.totalExpenses);
-    if (balEl) balEl.textContent = formatCLP(m.operatingBalance);
+    if (balEl) {
+      if (m.operatingBalance < 0) {
+        balEl.textContent = `-$ ${Math.abs(m.operatingBalance).toLocaleString('es-CL')}`;
+        balEl.className = 'text-amber-400 font-mono font-bold';
+      } else {
+        balEl.textContent = formatCLP(m.operatingBalance);
+        balEl.className = 'text-emerald-400 font-mono font-bold';
+      }
+    }
   });
 }
 

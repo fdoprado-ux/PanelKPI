@@ -117,7 +117,7 @@ class MockService {
       { month: 'Ago', sales: 85600000, discounts: 4600000 },
       { month: 'Sep', sales: 91200000, discounts: 4950000 }, // Fiestas Patrias boost!
       { month: 'Oct', sales: 84620000, discounts: 4580000 },
-      { month: 'Nov', sales: 88900000, discounts: 4790000 } // Current month
+      { month: 'Nov', sales: 47774369, discounts: 4790000 } // Current month
     ];
 
     // Sales channel distribution
@@ -202,6 +202,27 @@ class MockService {
     const last3MonthsData = [
       {
         year: 2026,
+        month: 11,
+        monthName: 'Noviembre',
+        isCurrentMonth: true,
+        sales: 47774369,
+        invoicesReceived: 47774639, // Gastos Facturas SII
+        salaries: 0,
+        rent: 4711018,
+        electricity: 2000000,
+        f29Tax: 0,
+        djCost: monthlyDjCost,
+        invoicesRate: 100.0,
+        salariesRate: 0,
+        rentRate: 9.9,
+        electricityRate: 4.2,
+        f29TaxRate: 0.0,
+        djCostRate: 3.9,
+        totalExpenses: 47774639 + 4711018 + 2000000 + monthlyDjCost,
+        operatingBalance: 47774369 - (47774639 + 4711018 + 2000000 + monthlyDjCost)
+      },
+      {
+        year: 2026,
         month: 10,
         monthName: 'Octubre',
         sales: 63961266,
@@ -263,16 +284,16 @@ class MockService {
     ];
 
     const last3Months = {
-      period: 'Agosto - Octubre 2026',
-      totalSales: 198051112,
-      totalInvoices: 79227778,
-      totalSalaries: 45295230,
-      totalRent: 14107438,
-      totalElectricity: 6000000,
-      totalF29Tax: 7146837,
-      totalDjCost: 5640000,
-      totalExpenses: 157417283,
-      totalOperatingBalance: 40633829,
+      period: 'Agosto - Noviembre 2026',
+      totalSales: last3MonthsData.reduce((acc, m) => acc + m.sales, 0),
+      totalInvoices: last3MonthsData.reduce((acc, m) => acc + m.invoicesReceived, 0),
+      totalSalaries: last3MonthsData.reduce((acc, m) => acc + m.salaries, 0),
+      totalRent: last3MonthsData.reduce((acc, m) => acc + m.rent, 0),
+      totalElectricity: last3MonthsData.reduce((acc, m) => acc + m.electricity, 0),
+      totalF29Tax: last3MonthsData.reduce((acc, m) => acc + m.f29Tax, 0),
+      totalDjCost: last3MonthsData.reduce((acc, m) => acc + m.djCost, 0),
+      totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
+      totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
       months: last3MonthsData
     };
 

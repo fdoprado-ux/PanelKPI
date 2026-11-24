@@ -355,10 +355,10 @@ class FudoService {
 
     monthlyProgression.push({
       month: 'Nov',
-      sales: mtdRes.totalSales,
+      sales: 47774369,
       discounts: mtdRes.totalDiscounts
     });
-    yearSales += mtdRes.totalSales;
+    yearSales += 47774369;
     yearOrders += mtdRes.orders;
     yearDiscounts += mtdRes.totalDiscounts;
 
@@ -427,9 +427,30 @@ class FudoService {
       totalMonthlyEstimate: 1880000
     };
 
-    // 9. Last 3 Months (Agosto, Septiembre, Octubre 2026) with invoices, salaries, rent, Luz CGE, F29 SII, and DJs
+    // 9. Last Months (Agosto, Septiembre, Octubre, Noviembre 2026) with invoices, salaries, rent, Luz CGE, F29 SII, and DJs
     const monthlyDjCost = 1880000; // 4 semanas x $470.000
     const last3MonthsData = [
+      {
+        year: 2026,
+        month: 11,
+        monthName: 'Noviembre',
+        isCurrentMonth: true,
+        sales: 47774369,
+        invoicesReceived: 47774639, // Gastos Facturas SII
+        salaries: 0,
+        rent: 4711018,
+        electricity: 2000000,
+        f29Tax: 0,
+        djCost: monthlyDjCost,
+        invoicesRate: Number(((47774639 / 47774369) * 100).toFixed(1)),
+        salariesRate: 0,
+        rentRate: Number(((4711018 / 47774369) * 100).toFixed(1)),
+        electricityRate: Number(((2000000 / 47774369) * 100).toFixed(1)),
+        f29TaxRate: 0.0,
+        djCostRate: Number(((monthlyDjCost / 47774369) * 100).toFixed(1)),
+        totalExpenses: 47774639 + 4711018 + 2000000 + monthlyDjCost,
+        operatingBalance: 47774369 - (47774639 + 4711018 + 2000000 + monthlyDjCost)
+      },
       {
         year: 2026,
         month: 10,
@@ -493,7 +514,7 @@ class FudoService {
     ];
 
     const last3Months = {
-      period: 'Agosto - Octubre 2026',
+      period: 'Agosto - Noviembre 2026',
       totalSales: last3MonthsData.reduce((acc, m) => acc + m.sales, 0),
       totalInvoices: last3MonthsData.reduce((acc, m) => acc + m.invoicesReceived, 0),
       totalSalaries: last3MonthsData.reduce((acc, m) => acc + m.salaries, 0),
@@ -503,6 +524,12 @@ class FudoService {
       totalDjCost: last3MonthsData.reduce((acc, m) => acc + m.djCost, 0),
       totalExpenses: last3MonthsData.reduce((acc, m) => acc + m.totalExpenses, 0),
       totalOperatingBalance: last3MonthsData.reduce((acc, m) => acc + m.operatingBalance, 0),
+      currentMonth: {
+        month: 11,
+        monthName: 'Noviembre',
+        sales: 47774369,
+        invoicesReceived: 47774639
+      },
       months: last3MonthsData
     };
 
