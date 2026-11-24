@@ -199,6 +199,22 @@ class MockService {
     };
 
     const monthlyDjCost = 1880000;
+
+    // Helper to calculate exact proportional DJ costs based on weekly schedule up to current date
+    const computeProportionalDjCost = (year = 2026, month = 11, currentDay = 24) => {
+      // Weekly DJ schedule: Lunes: $80k, Martes: $80k, Miércoles: $160k, Jueves: $150k (Total semanal $470k)
+      const ratesByDayOfWeek = { 1: 80000, 2: 80000, 3: 160000, 4: 150000 };
+      let total = 0;
+      const maxDay = Math.min(Math.max(currentDay, 1), 30);
+      for (let d = 1; d <= maxDay; d++) {
+        const dow = new Date(Date.UTC(year, month - 1, d)).getUTCDay();
+        total += ratesByDayOfWeek[dow] || 0;
+      }
+      return total;
+    };
+    const nowChileDay = new Date().getDate() || 24;
+    const novemberDjCost = computeProportionalDjCost(2026, 11, nowChileDay);
+
     const last3MonthsData = [
       {
         year: 2026,
@@ -206,20 +222,20 @@ class MockService {
         monthName: 'Noviembre',
         isCurrentMonth: true,
         sales: 47774369,
-        invoicesReceived: 47774639, // Gastos Facturas SII
+        invoicesReceived: 18030811, // Gastos Facturas SII
         salaries: 0,
-        rent: 4711018,
-        electricity: 2000000,
+        rent: 0,
+        electricity: 0,
         f29Tax: 0,
-        djCost: monthlyDjCost,
-        invoicesRate: 100.0,
+        djCost: novemberDjCost,
+        invoicesRate: Number(((18030811 / 47774369) * 100).toFixed(1)),
         salariesRate: 0,
-        rentRate: 9.9,
-        electricityRate: 4.2,
+        rentRate: 0.0,
+        electricityRate: 0.0,
         f29TaxRate: 0.0,
-        djCostRate: 3.9,
-        totalExpenses: 47774639 + 4711018 + 2000000 + monthlyDjCost,
-        operatingBalance: 47774369 - (47774639 + 4711018 + 2000000 + monthlyDjCost)
+        djCostRate: Number(((novemberDjCost / 47774369) * 100).toFixed(1)),
+        totalExpenses: 18030811 + 0 + 0 + novemberDjCost,
+        operatingBalance: 47774369 - (18030811 + 0 + 0 + novemberDjCost)
       },
       {
         year: 2026,
